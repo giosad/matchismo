@@ -18,6 +18,7 @@
 		30A046E21C3BC0AC00786AF7 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A046E11C3BC0AC00786AF7 /* Card.m */; };
 		30A046E61C3BC2D300786AF7 /* PlayingCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A046E51C3BC2D300786AF7 /* PlayingCard.m */; };
 		30A046E91C3C057200786AF7 /* Deck.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A046E81C3C057200786AF7 /* Deck.m */; };
+		30B1BDB31C3D6C820005027B /* CardMatchingGameEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 30B1BDB21C3D6C820005027B /* CardMatchingGameEvent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,8 @@
 		30A046E51C3BC2D300786AF7 /* PlayingCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayingCard.m; sourceTree = "<group>"; };
 		30A046E71C3C057200786AF7 /* Deck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Deck.h; sourceTree = "<group>"; };
 		30A046E81C3C057200786AF7 /* Deck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Deck.m; sourceTree = "<group>"; };
+		30B1BDB11C3D6C820005027B /* CardMatchingGameEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardMatchingGameEvent.h; sourceTree = "<group>"; };
+		30B1BDB21C3D6C820005027B /* CardMatchingGameEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CardMatchingGameEvent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +101,8 @@
 		30A046E31C3BC0D000786AF7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				30B1BDB11C3D6C820005027B /* CardMatchingGameEvent.h */,
+				30B1BDB21C3D6C820005027B /* CardMatchingGameEvent.m */,
 				30A046E41C3BC2D300786AF7 /* PlayingCard.h */,
 				30A046E51C3BC2D300786AF7 /* PlayingCard.m */,
 				30A046E01C3BC0AC00786AF7 /* Card.h */,
@@ -190,6 +195,7 @@
 				30A046E61C3BC2D300786AF7 /* PlayingCard.m in Sources */,
 				309EF7481C3D0DAC009D581C /* CardMatchingGame.m in Sources */,
 				309EF7451C3C0FE4009D581C /* PlayingCardDeck.m in Sources */,
+				30B1BDB31C3D6C820005027B /* CardMatchingGameEvent.m in Sources */,
 				30A046E91C3C057200786AF7 /* Deck.m in Sources */,
 				30A046E21C3BC0AC00786AF7 /* Card.m in Sources */,
 			);

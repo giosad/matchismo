@@ -7,13 +7,16 @@
 //
 
 #import <Foundation/Foundation.h>
-#include "Deck.h"
+#import "Deck.h"
+#import "CardMatchingGameEvent.h"
 @interface CardMatchingGame : NSObject
 
 //designated initializer
 - (instancetype)initWithCardCount:(NSUInteger)count usingDeck:(Deck*)deck;
 -(void)chooseCardAtIndex:(NSUInteger)index;
 -(Card*)cardAtIndex:(NSUInteger)index;
-
+@property (nonatomic) NSUInteger matchNumRule;
+@property (strong, nonatomic) CardMatchingGameEvent* lastEvent;
 @property (nonatomic, readonly) NSInteger score;
+
 @end

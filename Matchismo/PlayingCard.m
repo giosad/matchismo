@@ -11,19 +11,20 @@
 @implementation PlayingCard
 
 - (int)match:(NSArray *) otherCards
-{
-    int score = 0;
-    if ([otherCards count] == 1) {
-        PlayingCard *otherCard = [otherCards firstObject];
+{ //@ggg change policy - should use sum not max
+    int totalScore = 0;
+    for (PlayingCard *otherCard in otherCards) {
+        int score = 0;
         if (otherCard.rank == self.rank) {
             score = 4;
         } else if ([otherCard.suit isEqualToString:self.suit]) {
             score = 1;
         }
+        totalScore += score;
         
     }
 
-    return score;
+    return totalScore;
 }
 
 
@@ -38,7 +39,7 @@
 
 + (NSArray *)validSuits
 {
-    return @[@"♥︎", @"♦︎", @"♠︎", @"♣︎"];
+    return @[@"♥️", @"♦️", @"♠️", @"♣️"];
 }
 - (void)setSuit:(NSString *)suit
 {
