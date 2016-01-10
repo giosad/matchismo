@@ -66,6 +66,21 @@ static const int COST_TO_CHOOSE = 1;
     return chosenCards;
 }
 
+//find the total score for all matches in the cards array
+-(int) calcMatchScore:(NSArray *)cards
+{
+    int totalScore = 0;
+    //go over all card pairs (twice)
+    for (Card *c1 in cards) {
+        for (Card *c2 in cards) {
+            if (c1 != c2) {
+                totalScore += [c1 match:@[c2]];
+            }
+        }
+    }
+    return totalScore / 2; //since we counted each match twice
+}
+
 -(void)checkMatchesToCard:(Card *)card
 {
     int cardsToCheckNum = self.matchNumRule - 1; //minus the card we clicked on now
@@ -79,13 +94,13 @@ static const int COST_TO_CHOOSE = 1;
     if ([cardsChosen count] < cardsToCheckNum) {
         ev.score = 0;
     } else {
-        int matchScore = [card match:cardsChosen]; //@ggg update later (should differ for 2 3 match rules)
+        int matchScore = [self calcMatchScore:ev.cardsParticipated];
         if (matchScore) {
             card.matched = YES;
-            ev.score = matchScore * MATCH_BONUS;
+            ev.score = matchScore * MATCH_BONUS / cardsToCheckNum; //normalize for difficulty
             
         } else {
-            ev.score = -MISMATCH_PENALTY;//@ggg update later (should differ for 2 3 match rules)
+            ev.score = -MISMATCH_PENALTY;
         }
         
         for (Card *otherCard in cardsChosen) {

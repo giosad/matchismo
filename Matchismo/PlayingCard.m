@@ -11,7 +11,7 @@
 @implementation PlayingCard
 
 - (int)match:(NSArray *) otherCards
-{ //@ggg change policy - should use sum not max
+{
     int totalScore = 0;
     for (PlayingCard *otherCard in otherCards) {
         int score = 0;
