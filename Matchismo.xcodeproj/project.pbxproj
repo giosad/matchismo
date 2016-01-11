@@ -10,6 +10,8 @@
 		307658391C42C40F00E83423 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 307658381C42C40F00E83423 /* Card.m */; };
 		3076583C1C438F8E00E83423 /* MatchCardGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3076583B1C438F8E00E83423 /* MatchCardGameViewController.m */; };
 		3076583F1C43909800E83423 /* SetCardGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3076583E1C43909800E83423 /* SetCardGameViewController.m */; };
+		307658421C43A65A00E83423 /* SetCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 307658411C43A65A00E83423 /* SetCardDeck.m */; };
+		307658451C43A67700E83423 /* SetCard.m in Sources */ = {isa = PBXBuildFile; fileRef = 307658441C43A67700E83423 /* SetCard.m */; };
 		309EF7451C3C0FE4009D581C /* PlayingCardDeck.m in Sources */ = {isa = PBXBuildFile; fileRef = 309EF7441C3C0FE4009D581C /* PlayingCardDeck.m */; };
 		309EF7481C3D0DAC009D581C /* CardMatchingGame.m in Sources */ = {isa = PBXBuildFile; fileRef = 309EF7471C3D0DAC009D581C /* CardMatchingGame.m */; };
 		30A046CB1C3AB52400786AF7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 30A046CA1C3AB52400786AF7 /* main.m */; };
@@ -30,6 +32,10 @@
 		3076583B1C438F8E00E83423 /* MatchCardGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MatchCardGameViewController.m; sourceTree = "<group>"; };
 		3076583D1C43909800E83423 /* SetCardGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetCardGameViewController.h; sourceTree = "<group>"; };
 		3076583E1C43909800E83423 /* SetCardGameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetCardGameViewController.m; sourceTree = "<group>"; };
+		307658401C43A65A00E83423 /* SetCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetCardDeck.h; sourceTree = "<group>"; };
+		307658411C43A65A00E83423 /* SetCardDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetCardDeck.m; sourceTree = "<group>"; };
+		307658431C43A67700E83423 /* SetCard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SetCard.h; sourceTree = "<group>"; };
+		307658441C43A67700E83423 /* SetCard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SetCard.m; sourceTree = "<group>"; };
 		309EF7431C3C0FE4009D581C /* PlayingCardDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayingCardDeck.h; sourceTree = "<group>"; };
 		309EF7441C3C0FE4009D581C /* PlayingCardDeck.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayingCardDeck.m; sourceTree = "<group>"; };
 		309EF7461C3D0DAC009D581C /* CardMatchingGame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CardMatchingGame.h; sourceTree = "<group>"; };
@@ -120,16 +126,20 @@
 		30A046E31C3BC0D000786AF7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				307658371C42C40F00E83423 /* Card.h */,
-				307658381C42C40F00E83423 /* Card.m */,
 				30B1BDB11C3D6C820005027B /* CardMatchingGameEvent.h */,
 				30B1BDB21C3D6C820005027B /* CardMatchingGameEvent.m */,
+				307658371C42C40F00E83423 /* Card.h */,
+				307658381C42C40F00E83423 /* Card.m */,
 				30A046E41C3BC2D300786AF7 /* PlayingCard.h */,
 				30A046E51C3BC2D300786AF7 /* PlayingCard.m */,
+				307658431C43A67700E83423 /* SetCard.h */,
+				307658441C43A67700E83423 /* SetCard.m */,
 				30A046E71C3C057200786AF7 /* Deck.h */,
 				30A046E81C3C057200786AF7 /* Deck.m */,
 				309EF7431C3C0FE4009D581C /* PlayingCardDeck.h */,
 				309EF7441C3C0FE4009D581C /* PlayingCardDeck.m */,
+				307658401C43A65A00E83423 /* SetCardDeck.h */,
+				307658411C43A65A00E83423 /* SetCardDeck.m */,
 				309EF7461C3D0DAC009D581C /* CardMatchingGame.h */,
 				309EF7471C3D0DAC009D581C /* CardMatchingGame.m */,
 			);
@@ -216,10 +226,12 @@
 				309EF7481C3D0DAC009D581C /* CardMatchingGame.m in Sources */,
 				307658391C42C40F00E83423 /* Card.m in Sources */,
 				3076583F1C43909800E83423 /* SetCardGameViewController.m in Sources */,
+				307658451C43A67700E83423 /* SetCard.m in Sources */,
 				309EF7451C3C0FE4009D581C /* PlayingCardDeck.m in Sources */,
 				30B1BDB31C3D6C820005027B /* CardMatchingGameEvent.m in Sources */,
 				3076583C1C438F8E00E83423 /* MatchCardGameViewController.m in Sources */,
 				30A046E91C3C057200786AF7 /* Deck.m in Sources */,
+				307658421C43A65A00E83423 /* SetCardDeck.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

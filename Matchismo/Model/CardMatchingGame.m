@@ -52,7 +52,7 @@
 
 
 static const int MISMATCH_PENALTY = 2;
-static const int MATCH_BONUS = 2;
+static const int MATCH_BONUS = 1;
 static const int COST_TO_CHOOSE = 1;
 
 -(NSArray* )getCardsChosenAndNotMatched
@@ -66,24 +66,9 @@ static const int COST_TO_CHOOSE = 1;
     return chosenCards;
 }
 
-//find the total score for all matches in the cards array
--(int) calcMatchScore:(NSArray *)cards
-{
-    int totalScore = 0;
-    //go over all card pairs (twice)
-    for (Card *c1 in cards) {
-        for (Card *c2 in cards) {
-            if (c1 != c2) {
-                totalScore += [c1 match:@[c2]];
-            }
-        }
-    }
-    return totalScore / 2; //since we counted each match twice
-}
-
 -(void)checkMatchesToCard:(Card *)card
 {
-    int cardsToCheckNum = self.matchNumRule - 1; //minus the card we clicked on now
+    int cardsToCheckNum = (int)self.matchNumRule - 1; //minus the card we clicked on now
     CardMatchingGameEvent* ev = [[CardMatchingGameEvent alloc] init];
     self.lastEvent = ev;
 
@@ -94,11 +79,10 @@ static const int COST_TO_CHOOSE = 1;
     if ([cardsChosen count] < cardsToCheckNum) {
         ev.score = 0;
     } else {
-        int matchScore = [self calcMatchScore:ev.cardsParticipated];
+        int matchScore = [card match:cardsChosen];
         if (matchScore) {
             card.matched = YES;
-            ev.score = matchScore * MATCH_BONUS / cardsToCheckNum; //normalize for difficulty
-            
+            ev.score = matchScore * MATCH_BONUS;
         } else {
             ev.score = -MISMATCH_PENALTY;
         }

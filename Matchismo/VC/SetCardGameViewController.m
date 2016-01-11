@@ -7,11 +7,22 @@
 //
 
 #import "SetCardGameViewController.h"
-//#import "SetCardDeck.h"
+#import "SetCardDeck.h"
 
 @implementation SetCardGameViewController
 - (Deck *)createDeck //override
 {
-    return nil;//[[SetCardDeck alloc] init];
+    return [[SetCardDeck alloc] init];
 }
+
+-(NSString *)titleForCard:(Card *)card
+{
+    return card.isChosen ? card.contents : @"";
+}
+
+-(UIImage *)backgroundImageForCard:(Card *)card
+{
+    return [UIImage imageNamed: card.isChosen ? @"cardfrontselected" : @"cardfront"];
+}
+
 @end

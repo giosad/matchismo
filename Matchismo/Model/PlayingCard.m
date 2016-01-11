@@ -7,24 +7,41 @@
 //
 
 #import "PlayingCard.h"
+@interface PlayingCard()
 
+- (int)matchOtherCard:(PlayingCard *) otherCard;
+@end
 @implementation PlayingCard
 
-- (int)match:(NSArray *) otherCards
+
+
+- (int)matchOtherCard:(PlayingCard *) otherCard
 {
-    int totalScore = 0;
-    for (PlayingCard *otherCard in otherCards) {
-        int score = 0;
-        if (otherCard.rank == self.rank) {
-            score = 4;
-        } else if ([otherCard.suit isEqualToString:self.suit]) {
-            score = 1;
-        }
-        totalScore += score;
-        
+    int score = 0;
+    if (otherCard.rank == self.rank) {
+        score = 24; //should be divisible both by 2 and 3
+    } else if ([otherCard.suit isEqualToString:self.suit]) {
+        score = 6; //should be divisible both by 2 and 3
     }
 
-    return totalScore;
+    return score;
+}
+
+// Find the total score for all matches in the cards array.
+-(int) match:(NSArray *)cards
+{
+    NSArray *allCards = [cards arrayByAddingObject:self];
+    int totalScore = 0;
+    //go over all card pairs (twice)
+    for (PlayingCard *c1 in allCards) {
+        for (PlayingCard *c2 in allCards) {
+            if (c1 != c2) {
+                totalScore += [c1 matchOtherCard:c2];
+            }
+        }
+    }
+    // /2 since we counted each match twice, / count for score normalization.
+    return totalScore / 2 / [allCards count];
 }
 
 
@@ -35,7 +52,7 @@
 }
 
 
-@synthesize suit = _suit; // because we provide setter AND getter
+@synthesize suit = _suit; // because we provide setter AND getter
 
 + (NSArray *)validSuits
 {

@@ -61,7 +61,7 @@
 {
     if (self.gameModeSwitch.on) {
         self.gameModeLabel.text = @"2 card match mode";
-        self.game.matchNumRule = 2; //@ggg check range in setter
+        self.game.matchNumRule = 2; //TODO(gena) check range in setter
     } else {
         self.gameModeLabel.text = @"3 card match mode";
         self.game.matchNumRule = 3;
