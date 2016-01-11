@@ -51,9 +51,8 @@
 }
 
 
-static const int MISMATCH_PENALTY = 2;
-static const int MATCH_BONUS = 1;
-static const int COST_TO_CHOOSE = 1;
+
+
 
 -(NSArray* )getCardsChosenAndNotMatched
 {
@@ -76,15 +75,13 @@ static const int COST_TO_CHOOSE = 1;
     [ev.cardsParticipated addObjectsFromArray:cardsChosen];
     [ev.cardsParticipated addObject:card];
     
+    //if didn't finish choosing cards up to the policy amount
     if ([cardsChosen count] < cardsToCheckNum) {
         ev.score = 0;
     } else {
-        int matchScore = [card match:cardsChosen];
-        if (matchScore) {
+        ev.score = [card match:cardsChosen];
+        if (ev.score > 0) {
             card.matched = YES;
-            ev.score = matchScore * MATCH_BONUS;
-        } else {
-            ev.score = -MISMATCH_PENALTY;
         }
         
         for (Card *otherCard in cardsChosen) {
@@ -95,8 +92,9 @@ static const int COST_TO_CHOOSE = 1;
     self.score += ev.score;
     
     self.lastEvent = ev;
-    }
+}
 
+static const int COST_TO_CHOOSE = 1;
 -(void)chooseCardAtIndex:(NSUInteger)index
 {
     Card *card = [self cardAtIndex:index];

@@ -27,6 +27,8 @@
     return score;
 }
 
+
+const static int MISMATCH_PENALTY = -2;
 // Find the total score for all matches in the cards array.
 -(int) match:(NSArray *)cards
 {
@@ -40,15 +42,20 @@
             }
         }
     }
-    // /2 since we counted each match twice, / count for score normalization.
-    return totalScore / 2 / [allCards count];
+    
+    if (totalScore > 0) {
+        // /2 since we counted each match twice, / count for score normalization.
+        totalScore = totalScore / 2 / [allCards count];
+    } else {
+        totalScore = MISMATCH_PENALTY;
+    }
+    return totalScore;
 }
 
 
-- (NSString *) contents
+- (NSString *) contents //unused
 {
-    NSArray *rankStrings =[PlayingCard rankStrings];
-    return [rankStrings[self.rank] stringByAppendingString:self.suit];
+    return nil;
 }
 
 
@@ -56,7 +63,7 @@
 
 + (NSArray *)validSuits
 {
-    return @[@"♥️", @"♦️", @"♠️", @"♣️"];
+    return @[@"♣︎", @"♠︎", @"♦︎", @"♥︎"];
 }
 - (void)setSuit:(NSString *)suit
 {
@@ -72,13 +79,9 @@
 
 + (NSUInteger)maxRank
 {
-    return [[self rankStrings] count]-1;
+    return 12;
 }
 
-+ (NSArray *)rankStrings
-{
-    return @[@"?",@"A",@"2",@"3",@"4", @"5", @"6", @"7", @"8", @"9", @"10", @"J", @"Q", @"K"];
-}
 
 -(void)setRank:(NSUInteger) rank
 {

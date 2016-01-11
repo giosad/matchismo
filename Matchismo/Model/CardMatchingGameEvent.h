@@ -10,5 +10,5 @@
 #import "Card.h"
 @interface CardMatchingGameEvent : NSObject
 @property (nonatomic) NSInteger score;
-@property (strong, nonatomic) NSMutableArray *cardsParticipated;
+@property (strong, nonatomic) NSMutableArray<Card* > *cardsParticipated;
 @end

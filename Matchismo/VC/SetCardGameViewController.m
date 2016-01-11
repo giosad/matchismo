@@ -15,6 +15,8 @@
     return [[SetCardDeck alloc] init];
 }
 
+
+//▲ ● ■
 -(NSString *)titleForCard:(Card *)card
 {
     return card.isChosen ? card.contents : @"";

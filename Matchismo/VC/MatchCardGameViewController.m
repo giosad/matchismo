@@ -8,9 +8,57 @@
 
 #import "MatchCardGameViewController.h"
 #import "PlayingCardDeck.h"
+#import "PlayingCard.h"
+#import "CardMatchingGameEvent.h"
 @implementation MatchCardGameViewController
+
 - (Deck *)createDeck //override
 {
     return [[PlayingCardDeck alloc] init];
 }
+
+-(NSAttributedString* ) cardInfo:(Card *)card
+{
+    NSArray *rankStrings = @[@"A",@"2",@"3",@"4", @"5", @"6", @"7", @"8", @"9", @"10", @"J", @"Q", @"K"];
+    PlayingCard *playingCard = (PlayingCard*)card;
+    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] init];
+    
+    //"♣︎", @"♠︎", @"♦︎", @"♥︎"
+    NSMutableAttributedString *suitStr = [[NSMutableAttributedString alloc]
+                                          initWithString:playingCard.suit];
+    
+    UIColor *suitColor = [@[ @"♦︎", @"♥︎"] containsObject:playingCard.suit] ? [UIColor redColor] : [UIColor blackColor];
+    
+    [suitStr addAttribute:NSForegroundColorAttributeName
+                    value:suitColor
+                    range:NSMakeRange(0, [suitStr length])];
+    
+    NSMutableAttributedString *rankStr = [[NSMutableAttributedString alloc]
+                                          initWithString:rankStrings[playingCard.rank]];
+    
+    [rankStr addAttribute:NSForegroundColorAttributeName
+                    value:[UIColor blackColor]
+                    range:NSMakeRange(0, [rankStr length])];
+    
+    [title appendAttributedString: suitStr];
+    [title appendAttributedString: rankStr];
+    
+//    
+//    [title addAttribute:NSFontAttributeName
+//                 value:[UIFont systemFontOfSize:11]
+//                  range:NSMakeRange(0, [title length])];
+    return title;
+}
+
+-(NSAttributedString *)titleForCard:(Card *)card //override
+{
+    return card.isChosen ?  [self cardInfo:card] : [[NSAttributedString alloc] init];
+}
+
+-(UIImage *)backgroundImageForCard:(Card *)card //override
+{
+    return [UIImage imageNamed: card.isChosen ? @"cardfront" : @"cardback"];
+}
+
+
 @end

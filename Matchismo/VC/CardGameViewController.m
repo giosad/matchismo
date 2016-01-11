@@ -7,11 +7,12 @@
 //
 
 #import "CardGameViewController.h"
+#import "GameHistoryViewController.h"
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
 
-
+@property (strong, nonatomic) NSMutableAttributedString *gameHistory;
 @property (strong, nonatomic) CardMatchingGame *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
@@ -23,7 +24,7 @@
 @implementation CardGameViewController
 
 
-- (CardMatchingGame*)game
+- (CardMatchingGame*)game //lazy init
 {
     if (!_game) {
         _game = [[CardMatchingGame alloc] initWithCardCount:[self.cardButtons count]
@@ -38,10 +39,19 @@
     return nil;
 }
 
+- (NSMutableAttributedString *)gameHistory //lazy init
+{
+    if (!_gameHistory) {
+        _gameHistory = [[NSMutableAttributedString alloc] init];
+    }
+    return _gameHistory;
+}
+
 - (IBAction)startNewGame:(UIButton *)sender {
 
     self.game = nil;  //will reset the game state
-    
+    self.gameHistory = nil; //will reset the history log
+
     [self updateUI];
     self.gameModeSwitch.enabled = YES;
     [self touchGameModeSwitch:nil]; //reset matchNumRule
@@ -73,38 +83,77 @@
     for (UIButton *cardButton in self.cardButtons) {
         NSUInteger cardIndex = [self.cardButtons indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardIndex];
-        [cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
+        [cardButton setAttributedTitle:[self titleForCard:card] forState:UIControlStateNormal];
         [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState: UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
     }
-    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", (int)self.game.score];
     
-    self.gameEventInfoLabel.text = [self textInfoFromGameEvent:self.game.lastEvent];
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", (int)self.game.score];
+    self.gameEventInfoLabel.attributedText = [self textInfoFromGameEvent:self.game.lastEvent];
+    
+    if (self.game.lastEvent.score != 0) {
+        [self.gameHistory appendAttributedString:self.gameEventInfoLabel.attributedText];
+        [self.gameHistory appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+    }
+
 
 }
 
--(NSString *)titleForCard:(Card *)card
+-(NSAttributedString *)titleForCard:(Card *)card //abstract
 {
-    return card.isChosen ? card.contents : @"";
+    return nil;
 }
 
--(UIImage *)backgroundImageForCard:(Card *)card
+-(NSAttributedString *)cardInfo:(Card *)card //abstract
 {
-    return [UIImage imageNamed: card.isChosen ? @"cardfront" : @"cardback"];
+    return nil;
 }
 
--(NSString *)textInfoFromGameEvent:(CardMatchingGameEvent *)event {
-    NSMutableString* cardsStr = [[NSMutableString alloc] init];
+-(UIImage *)backgroundImageForCard:(Card *)card //abstract
+{
+    return nil;
+}
+
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"history"]) {
+        if ([segue.destinationViewController isKindOfClass:[GameHistoryViewController class]]) {
+            GameHistoryViewController *ghCtrl = (GameHistoryViewController *)segue.destinationViewController;
+            ghCtrl.gameHistory = self.gameHistory;
+        }
+    }
+}
+
+-(NSAttributedString *)textInfoFromGameEvent:(CardMatchingGameEvent *)event
+{
+    NSMutableAttributedString* result = [[NSMutableAttributedString alloc] init];
+    NSMutableAttributedString* cardsStr = [[NSMutableAttributedString alloc] init];
     for (Card *card in event.cardsParticipated) {
-        [cardsStr appendString:card.contents];
-        [cardsStr appendString:@" "];
+        [cardsStr appendAttributedString:[self cardInfo:card]];
+        [cardsStr appendAttributedString: [[NSMutableAttributedString alloc] initWithString:@" "]];
     }
     if (event.score == 0) {
-        return cardsStr;
+        [result appendAttributedString:cardsStr];
     } else if (event.score > 0) {
-        return [NSString stringWithFormat:@"Matched %@for %d points.", cardsStr, (int)event.score];
+        NSMutableAttributedString* part1 = [[NSMutableAttributedString alloc] initWithString:@"Matched "];
+        NSMutableAttributedString* part2 = [[NSMutableAttributedString alloc]
+                                            initWithString:[NSString stringWithFormat:@"for %d points.",
+                                                            (int)event.score]];
+        
+        [result appendAttributedString:part1];
+        [result appendAttributedString:cardsStr];
+        [result appendAttributedString:part2];
+        
     } else { //if negative score
-        return [NSString stringWithFormat:@"%@don't match! %d point penalty.", cardsStr, (int)-event.score];
+        NSMutableAttributedString* part2 = [[NSMutableAttributedString alloc]
+                                            initWithString:[NSString stringWithFormat:@"don't match! %d point penalty.",
+                                                            (int)-event.score]];
+        [result appendAttributedString:cardsStr];
+        [result appendAttributedString:part2];
+        
     }
+    return result;
 }
 @end
+

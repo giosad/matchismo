@@ -11,7 +11,7 @@
 @implementation CardMatchingGameEvent
 -(NSMutableArray *)cardsParticipated
 {
-    if (!_cardsParticipated) _cardsParticipated = [[NSMutableArray alloc] init];
+    if (!_cardsParticipated) _cardsParticipated = [[NSMutableArray<Card*> alloc] init];
     return _cardsParticipated;
 }
 
