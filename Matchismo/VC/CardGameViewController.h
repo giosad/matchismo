@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "Deck.h"
 @interface CardGameViewController : UIViewController
-
+- (Deck *)createDeck; //abstract, should return a deck of card that follow a certain match rule
 
 @end
 
