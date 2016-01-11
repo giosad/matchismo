@@ -136,6 +136,7 @@
     if (event.score == 0) {
         [result appendAttributedString:cardsStr];
     } else if (event.score > 0) {
+        
         NSMutableAttributedString* part1 = [[NSMutableAttributedString alloc] initWithString:@"Matched "];
         NSMutableAttributedString* part2 = [[NSMutableAttributedString alloc]
                                             initWithString:[NSString stringWithFormat:@"for %d points.",
@@ -153,6 +154,10 @@
         [result appendAttributedString:part2];
         
     }
+    
+    [result addAttribute:NSFontAttributeName
+                   value:[UIFont systemFontOfSize:13]
+                   range:NSMakeRange(0, [result length])];
     return result;
 }
 @end
