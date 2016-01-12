@@ -47,11 +47,16 @@
     return _gameHistory;
 }
 
-- (IBAction)startNewGame:(UIButton *)sender {
+- (IBAction)startNewGameButton:(UIButton *)sender {
+    [self startNewGame];
+}
 
+
+-(void) startNewGame {
+    
     self.game = nil;  //will reset the game state
     self.gameHistory = nil; //will reset the history log
-
+    
     [self updateUI];
     self.gameModeSwitch.enabled = YES;
     [self touchGameModeSwitch:nil]; //reset matchNumRule

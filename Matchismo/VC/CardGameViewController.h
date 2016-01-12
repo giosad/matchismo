@@ -22,6 +22,6 @@
 //abstract, returns an image for /c card current state
 -(UIImage *)backgroundImageForCardInCurrentState:(Card *)card;
 
-
+-(void)startNewGame;
 @end
 

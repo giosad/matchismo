@@ -9,6 +9,9 @@
 #import "SetCardGameViewController.h"
 #import "SetCardDeck.h"
 #import "SetCard.h"
+
+@interface SetCardGameViewController()
+@end
 @implementation SetCardGameViewController
 
 
@@ -21,29 +24,72 @@
 -(NSAttributedString* ) titleForCard:(Card *)card
 {
     SetCard *setCard = (SetCard*)card;
-    NSMutableAttributedString *title = [[NSMutableAttributedString alloc] init];
     
-    //"♣︎", @"♠︎", @"♦︎", @"♥︎"
-#if 0
-    NSMutableAttributedString *suitStr = [[NSMutableAttributedString alloc]
-                                          initWithString:setCard.suit];
+    NSMutableString *titleStr = [[NSMutableString alloc] init];
+    NSString *shapeStr = nil;
+    switch (setCard.shape){
+        case SetCardShapeCircle:
+            shapeStr = @"●";
+            //shapeStr = @"A";
+            break;
+        case SetCardShapeRectangle:
+            shapeStr = @"■";
+            //shapeStr = @"B";
+            break;
+        case SetCardShapeTriangle:
+            shapeStr = @"▲";
+            //shapeStr = @"C";
+            break;
+        default:
+            shapeStr = @"?";
+            break;
+    }
+
+    for (int i = 0; i < setCard.count; i++) {
+        [titleStr appendString:shapeStr];
+     }
     
-    UIColor *suitColor = [@[ @"♦︎", @"♥︎"] containsObject:playingCard.suit] ? [UIColor redColor] : [UIColor blackColor];
     
-    [suitStr addAttribute:NSForegroundColorAttributeName
-                    value:suitColor
-                    range:NSMakeRange(0, [suitStr length])];
+    UIColor *fillColor = [UIColor blackColor];
+    UIColor *strokeColor = [UIColor blackColor];
     
-    NSMutableAttributedString *rankStr = [[NSMutableAttributedString alloc]
-                                          initWithString:rankStrings[playingCard.rank]];
+    switch (setCard.color) {
+        case SetCardColorRed:
+            strokeColor = [UIColor redColor];
+            break;
+        case SetCardColorGreen:
+            strokeColor = [UIColor greenColor];
+            break;
+        case SetCardColorBlue:
+            strokeColor = [UIColor blueColor];
+            break;
+    }
     
-    [rankStr addAttribute:NSForegroundColorAttributeName
-                    value:[UIColor blackColor]
-                    range:NSMakeRange(0, [rankStr length])];
+    switch (setCard.shading) {
+        case SetCardShadingEmpty:
+            fillColor = [strokeColor colorWithAlphaComponent:0];
+            break;
+        case SetCardShadingStripes:
+            fillColor = [strokeColor colorWithAlphaComponent:0.3];
+            break;
+        case SetCardShadindFull:
+            fillColor = strokeColor;
+            break;
+    }
     
-    [title appendAttributedString: suitStr];
-    [title appendAttributedString: rankStr];
-#endif
+    
+    NSDictionary* titleAttribs = @{
+    NSStrokeWidthAttributeName : @-10,
+    NSStrokeColorAttributeName : strokeColor,
+    NSForegroundColorAttributeName: fillColor,
+    NSFontAttributeName: [UIFont systemFontOfSize:10]};
+    
+    NSMutableAttributedString *title = [[NSMutableAttributedString alloc]
+                                        initWithString:titleStr
+                                        attributes:titleAttribs];
+    
+
+
     //
     //    [title addAttribute:NSFontAttributeName
     //                 value:[UIFont systemFontOfSize:11]
@@ -65,5 +111,10 @@
 }
 
 
+-(void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self startNewGame];
+}
 
 @end
