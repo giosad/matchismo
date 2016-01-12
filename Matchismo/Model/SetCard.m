@@ -12,21 +12,61 @@
 +(int)maxCount {
     return 3;
 }
-const static int MISMATCH_PENALTY = -2;
-// Find the total score for all matches in the cards array.
+const static int MISMATCH_PENALTY = -3;
+const static int MATCH_BONUS = 10;
+
+-(BOOL) allEqualOrDifferent:(NSArray*)array
+{
+    NSSet *uniqueSet = [NSSet setWithArray:array];
+    return ([uniqueSet count] == 1) || ([uniqueSet count] == [array count]);
+}
+
+-(NSArray*) mapArray:(NSArray*)arr withBlock:(id(^)(id))mapFunc
+{
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[arr count]];
+    for (id arrElem in arr) {
+        [result addObject:mapFunc(arrElem)];
+    }
+    return result;
+}
+
 -(int) match:(NSArray *)cards
 {
-    NSArray *allCards = [cards arrayByAddingObject:self];
-    int totalScore = 0;
-      
-    if (totalScore > 0) {
-        // /2 since we counted each match twice, / count for score normalization.
-        totalScore = totalScore / 2 / [allCards count];
-    } else {
-        totalScore = MISMATCH_PENALTY;
+    NSArray<SetCard*> *allCards = [cards arrayByAddingObject:self];
+    assert([cards count] == 2);
+    
+    int score = MISMATCH_PENALTY;
+    
+    NSArray* shapes = [self mapArray:allCards withBlock:^(id elem) {
+        SetCard *card = (SetCard*)elem;
+        return [[NSNumber alloc] initWithInt:card.shape];
+    }];
+    NSArray* shadings = [self mapArray:allCards withBlock:^(id elem) {
+        SetCard *card = (SetCard*)elem;
+        return [[NSNumber alloc] initWithInt:card.shading];
+    }];
+    NSArray* colors = [self mapArray:allCards withBlock:^(id elem) {
+        SetCard *card = (SetCard*)elem;
+        return [[NSNumber alloc] initWithInt:card.color];
+    }];
+    NSArray* counts = [self mapArray:allCards withBlock:^(id elem) {
+        SetCard *card = (SetCard*)elem;
+        return [[NSNumber alloc] initWithInt:(int)card.count];
+    }];
+    
+
+    if ([self allEqualOrDifferent:shapes] &&
+        [self allEqualOrDifferent:shadings] &&
+        [self allEqualOrDifferent:colors] &&
+        [self allEqualOrDifferent:counts]) {
+        score = MATCH_BONUS;
     }
-    return totalScore;
+    
+    return score;
 }
+
+
+
 
 - (NSString *) contents
 {
