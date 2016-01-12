@@ -9,7 +9,7 @@
 #import "MatchCardGameViewController.h"
 #import "PlayingCardDeck.h"
 #import "PlayingCard.h"
-#import "CardMatchingGameEvent.h"
+
 @implementation MatchCardGameViewController
 
 - (Deck *)createDeck //override
@@ -17,7 +17,7 @@
     return [[PlayingCardDeck alloc] init];
 }
 
--(NSAttributedString* ) cardInfo:(Card *)card
+-(NSAttributedString* ) titleForCard:(Card *)card //override
 {
     NSArray *rankStrings = @[@"A",@"2",@"3",@"4", @"5", @"6", @"7", @"8", @"9", @"10", @"J", @"Q", @"K"];
     PlayingCard *playingCard = (PlayingCard*)card;
@@ -50,12 +50,12 @@
     return title;
 }
 
--(NSAttributedString *)titleForCard:(Card *)card //override
+-(NSAttributedString *)titleForCardInCurrentState:(Card *)card //override
 {
-    return card.isChosen ?  [self cardInfo:card] : [[NSAttributedString alloc] init];
+    return card.isChosen ?  [self titleForCard:card] : [[NSAttributedString alloc] init];
 }
 
--(UIImage *)backgroundImageForCard:(Card *)card //override
+-(UIImage *)backgroundImageForCardInCurrentState:(Card *)card //override
 {
     return [UIImage imageNamed: card.isChosen ? @"cardfront" : @"cardback"];
 }

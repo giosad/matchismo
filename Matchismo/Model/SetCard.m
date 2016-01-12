@@ -12,19 +12,21 @@
 +(int)maxCount {
     return 3;
 }
-- (int)match:(NSArray *) otherCards
+const static int MISMATCH_PENALTY = -2;
+// Find the total score for all matches in the cards array.
+-(int) match:(NSArray *)cards
 {
+    NSArray *allCards = [cards arrayByAddingObject:self];
     int totalScore = 0;
-    for (SetCard *otherCard in otherCards) {
-        int score = 0;
-        //TODO(gena): implement
-        totalScore += score;
-        
+      
+    if (totalScore > 0) {
+        // /2 since we counted each match twice, / count for score normalization.
+        totalScore = totalScore / 2 / [allCards count];
+    } else {
+        totalScore = MISMATCH_PENALTY;
     }
-    
     return totalScore;
 }
-
 
 - (NSString *) contents
 {

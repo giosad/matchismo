@@ -83,8 +83,8 @@
     for (UIButton *cardButton in self.cardButtons) {
         NSUInteger cardIndex = [self.cardButtons indexOfObject:cardButton];
         Card *card = [self.game cardAtIndex:cardIndex];
-        [cardButton setAttributedTitle:[self titleForCard:card] forState:UIControlStateNormal];
-        [cardButton setBackgroundImage:[self backgroundImageForCard:card] forState: UIControlStateNormal];
+        [cardButton setAttributedTitle:[self titleForCardInCurrentState:card] forState:UIControlStateNormal];
+        [cardButton setBackgroundImage:[self backgroundImageForCardInCurrentState:card] forState: UIControlStateNormal];
         cardButton.enabled = !card.isMatched;
     }
     
@@ -104,12 +104,15 @@
     return nil;
 }
 
--(NSAttributedString *)cardInfo:(Card *)card //abstract
+
+-(NSAttributedString *)titleForCardInCurrentState:(Card *)card //abstract
 {
     return nil;
 }
 
--(UIImage *)backgroundImageForCard:(Card *)card //abstract
+
+
+-(UIImage *)backgroundImageForCardInCurrentState:(Card *)card //abstract
 {
     return nil;
 }
@@ -130,7 +133,7 @@
     NSMutableAttributedString* result = [[NSMutableAttributedString alloc] init];
     NSMutableAttributedString* cardsStr = [[NSMutableAttributedString alloc] init];
     for (Card *card in event.cardsParticipated) {
-        [cardsStr appendAttributedString:[self cardInfo:card]];
+        [cardsStr appendAttributedString:[self titleForCard:card]];
         [cardsStr appendAttributedString: [[NSMutableAttributedString alloc] initWithString:@" "]];
     }
     if (event.score == 0) {
@@ -148,8 +151,7 @@
         
     } else { //if negative score
         NSMutableAttributedString* part2 = [[NSMutableAttributedString alloc]
-                                            initWithString:[NSString stringWithFormat:@"don't match! %d point penalty.",
-                                                            (int)-event.score]];
+                                            initWithString:[NSString stringWithFormat:@"don't match! %d point penalty.",(int)-event.score]];
         [result appendAttributedString:cardsStr];
         [result appendAttributedString:part2];
         

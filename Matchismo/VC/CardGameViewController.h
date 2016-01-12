@@ -9,10 +9,18 @@
 #import <UIKit/UIKit.h>
 #import "Deck.h"
 @interface CardGameViewController : UIViewController
-- (Deck *)createDeck; //abstract, should return a deck of card that follow a certain match rule
--(NSAttributedString *)titleForCard:(Card *)card; //abstract, returns title for /c card in its current state
--(NSAttributedString *)cardInfo:(Card *)card; //abstract, returns the string of the value of /c card
--(UIImage *)backgroundImageForCard:(Card *)card; //abstract, returns an image for /c card current state
+
+//abstract, should return a deck of card that follow a certain match rule
+- (Deck *)createDeck;
+
+//abstract, returns the string of the value of /c card
+-(NSAttributedString *)titleForCard:(Card *)card;
+
+//abstract, returns title for /c card in its current state
+-(NSAttributedString *)titleForCardInCurrentState:(Card *)card;
+
+//abstract, returns an image for /c card current state
+-(UIImage *)backgroundImageForCardInCurrentState:(Card *)card;
 
 
 @end
