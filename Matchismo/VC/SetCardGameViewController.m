@@ -21,7 +21,7 @@
 }
 
 //▲ ● ■
--(NSAttributedString* ) titleForCard:(Card *)card
+-(NSAttributedString* ) titleForCard:(Card *)card //override
 {
     SetCard *setCard = (SetCard*)card;
     
@@ -30,15 +30,12 @@
     switch (setCard.shape){
         case SetCardShapeCircle:
             shapeStr = @"●";
-            //shapeStr = @"A";
             break;
         case SetCardShapeRectangle:
             shapeStr = @"■";
-            //shapeStr = @"B";
             break;
         case SetCardShapeTriangle:
             shapeStr = @"▲";
-            //shapeStr = @"C";
             break;
         default:
             shapeStr = @"?";
@@ -72,7 +69,7 @@
         case SetCardShadingStripes:
             fillColor = [strokeColor colorWithAlphaComponent:0.3];
             break;
-        case SetCardShadindFull:
+        case SetCardShadingFull:
             fillColor = strokeColor;
             break;
     }
@@ -88,7 +85,6 @@
                                         initWithString:titleStr
                                         attributes:titleAttribs];
     
-
 
     //
     //    [title addAttribute:NSFontAttributeName

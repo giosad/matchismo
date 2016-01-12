@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, SetCardShape) {
 
 typedef NS_ENUM(NSUInteger, SetCardShading) {
     SetCardShadingStripes,
-    SetCardShadindFull,
+    SetCardShadingFull,
     SetCardShadingEmpty,
     SetCardShadingCount
 };
