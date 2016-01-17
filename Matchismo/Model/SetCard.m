@@ -64,7 +64,6 @@ const static int MATCH_BONUS = 10;
 
 - (NSString *) contents
 {
-   
     return nil;
 }
 

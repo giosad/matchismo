@@ -20,4 +20,8 @@
     return score;
 }
 
+- (id) cardId
+{
+  return self;
+}
 @end

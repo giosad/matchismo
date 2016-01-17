@@ -11,8 +11,7 @@
 @implementation SetCardDeck
 - (instancetype) init
 {
-    self = [super init];
-    if (self) {
+    if (self = [super init]) {
         for (int shape = 0; shape < SetCardShapeCount; shape++) {
             for (int color = 0; color < SetCardColorCount; color++) {
                 for (int shading = 0; shading < SetCardShadingCount; shading++) {
