@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Moves History-->
@@ -50,15 +51,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bb9-Jb-spM">
-                                <rect key="frame" x="531" y="498" width="51" height="31"/>
-                                <connections>
-                                    <action selector="touchGameModeSwitch:" destination="BYZ-38-t0r" eventType="valueChanged" id="THg-8e-Zv3"/>
-                                </connections>
-                            </switch>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EvV-PG-wnL">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="EvV-PG-wnL">
                                 <rect key="frame" x="10" y="490" width="91" height="48"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="91" id="Vo4-o5-YRo"/>
+                                </constraints>
                                 <state key="normal" title="New game">
                                     <color key="titleShadowColor" red="0.058823529409999999" green="0.43137254899999999" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
@@ -66,24 +64,58 @@
                                     <action selector="startNewGameButton:" destination="BYZ-38-t0r" eventType="touchUpInside" id="pht-J9-tL1"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="2 card match mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfm-0Z-yoE">
-                                <rect key="frame" x="349" y="508" width="174" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 card match mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfm-0Z-yoE">
+                                <rect key="frame" x="469" y="481" width="121" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="121" id="Rck-bj-zIP"/>
+                                    <constraint firstAttribute="height" constant="21" id="WlL-7A-hiH"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYH-vh-doL">
+                                <rect key="frame" x="109" y="503" width="192" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="192" id="Yhk-mK-fpz"/>
+                                    <constraint firstAttribute="height" constant="16" id="lfK-cV-4xW"/>
+                                </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wQg-zn-uTz">
-                                <rect key="frame" x="10" y="72" width="570" height="396"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="aGY-ZV-CFg">
+                                <rect key="frame" x="469" y="510" width="121" height="29"/>
+                                <segments>
+                                    <segment title="2"/>
+                                    <segment title="3"/>
+                                </segments>
+                                <connections>
+                                    <action selector="touchGameModeControl:" destination="BYZ-38-t0r" eventType="valueChanged" id="lAG-k0-229"/>
+                                </connections>
+                            </segmentedControl>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wQg-zn-uTz">
+                                <rect key="frame" x="10" y="72" width="580" height="396"/>
                                 <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYH-vh-doL">
-                                <rect key="frame" x="124" y="507" width="210" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="wQg-zn-uTz" secondAttribute="trailing" constant="-10" id="1Hc-oB-e2P"/>
+                            <constraint firstItem="aGY-ZV-CFg" firstAttribute="leading" secondItem="gfm-0Z-yoE" secondAttribute="leading" id="2Xs-xl-tV9"/>
+                            <constraint firstItem="wQg-zn-uTz" firstAttribute="leading" secondItem="EvV-PG-wnL" secondAttribute="leading" id="3uf-Wq-RQE"/>
+                            <constraint firstItem="aGY-ZV-CFg" firstAttribute="bottom" secondItem="EvV-PG-wnL" secondAttribute="bottom" id="6n1-Ca-2yZ"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="uYH-vh-doL" secondAttribute="bottom" constant="32" id="8vi-AK-TLK"/>
+                            <constraint firstItem="EvV-PG-wnL" firstAttribute="top" secondItem="wQg-zn-uTz" secondAttribute="bottom" constant="22" id="9kr-Yi-6my"/>
+                            <constraint firstItem="gfm-0Z-yoE" firstAttribute="top" secondItem="wQg-zn-uTz" secondAttribute="bottom" constant="13" id="HMk-DF-rQH"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="EvV-PG-wnL" secondAttribute="bottom" constant="13" id="HoW-if-MxS"/>
+                            <constraint firstItem="gfm-0Z-yoE" firstAttribute="trailing" secondItem="aGY-ZV-CFg" secondAttribute="trailing" id="M97-gy-qoy"/>
+                            <constraint firstItem="wQg-zn-uTz" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-10" id="btk-bX-Jbf"/>
+                            <constraint firstItem="aGY-ZV-CFg" firstAttribute="top" secondItem="gfm-0Z-yoE" secondAttribute="bottom" constant="8" symbolic="YES" id="cAh-CB-nGr"/>
+                            <constraint firstItem="gfm-0Z-yoE" firstAttribute="trailing" secondItem="wQg-zn-uTz" secondAttribute="trailing" id="sIl-pw-sh3"/>
+                            <constraint firstItem="uYH-vh-doL" firstAttribute="leading" secondItem="EvV-PG-wnL" secondAttribute="trailing" constant="8" symbolic="YES" id="xXZ-Cz-DGR"/>
+                            <constraint firstItem="wQg-zn-uTz" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="yrE-iO-ZKf"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KaK-xr-Ree">
                         <barButtonItem key="rightBarButtonItem" title="Moves History" id="cko-xy-sIh">
@@ -93,8 +125,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="gameModeControl" destination="aGY-ZV-CFg" id="Sbc-Ax-7BA"/>
                         <outlet property="gameModeLabel" destination="gfm-0Z-yoE" id="W6N-34-c2O"/>
-                        <outlet property="gameModeSwitch" destination="bb9-Jb-spM" id="scg-c2-0sa"/>
                         <outlet property="scoreLabel" destination="uYH-vh-doL" id="DiQ-BU-Nhb"/>
                     </connections>
                 </viewController>
