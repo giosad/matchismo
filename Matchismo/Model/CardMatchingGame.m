@@ -70,7 +70,7 @@
   NSInteger matchScore = 0;
   
   NSArray<Card*> *cardsChosen = [self getCardsChosenAndNotMatched];
-
+  
   
   //if didn't finish choosing cards up to the policy amount
   if ([cardsChosen count] < cardsToCheckNum) {

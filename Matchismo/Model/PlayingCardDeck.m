@@ -12,14 +12,14 @@
 @implementation PlayingCardDeck
 - (instancetype) init
 {
-    if (self = [super init]) {
-        for (NSString *suit in [PlayingCard validSuits]) {
-            for (NSUInteger rank = 0; rank <= [PlayingCard maxRank]; rank++) {
-                PlayingCard *card = [[PlayingCard alloc] initWithRank:rank suit:suit];
-                [self addCard:card];
-            }
-        }
+  if (self = [super init]) {
+    for (NSString *suit in [PlayingCard validSuits]) {
+      for (NSUInteger rank = 0; rank <= [PlayingCard maxRank]; rank++) {
+        PlayingCard *card = [[PlayingCard alloc] initWithRank:rank suit:suit];
+        [self addCard:card];
+      }
     }
-    return self;
+  }
+  return self;
 }
 @end

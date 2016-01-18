@@ -13,6 +13,6 @@
 @implementation GameHistoryViewController
 -(void)viewWillAppear:(BOOL)animated
 {
-    self.historyTextView.attributedText = self.gameHistory;
+  self.historyTextView.attributedText = self.gameHistory;
 }
 @end

@@ -23,46 +23,46 @@ const static int MATCH_BONUS = 10;
 
 -(BOOL) allEqualOrDifferent:(NSArray*)array
 {
-    NSSet *uniqueSet = [NSSet setWithArray:array];
-    return ([uniqueSet count] == 1) || ([uniqueSet count] == [array count]);
+  NSSet *uniqueSet = [NSSet setWithArray:array];
+  return ([uniqueSet count] == 1) || ([uniqueSet count] == [array count]);
 }
 
 -(NSArray*) mapCardsArray:(NSArray*)arr withBlock:(int(^)(SetCard*))mapFunc
 {
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[arr count]];
-    for (SetCard *card in arr) {
-        [result addObject:[NSNumber numberWithInt:mapFunc(card)]];
-    }
-    return result;
+  NSMutableArray *result = [NSMutableArray arrayWithCapacity:[arr count]];
+  for (SetCard *card in arr) {
+    [result addObject:[NSNumber numberWithInt:mapFunc(card)]];
+  }
+  return result;
 }
 
 -(int) match:(NSArray *)cards
 {
-    NSArray<SetCard*> *allCards = [cards arrayByAddingObject:self];
-    int score = MISMATCH_PENALTY;
-    
-    NSArray* shapes = [self mapCardsArray:allCards withBlock:^(SetCard* card) {
-        return (int)card.shape;
-    }];
-    NSArray* shadings = [self mapCardsArray:allCards withBlock:^(SetCard* card) {
-        return (int)card.shading;
-    }];
-    NSArray* colors = [self mapCardsArray:allCards withBlock:^(SetCard* card) {
-        return (int)card.color;
-    }];
-    NSArray* counts = [self mapCardsArray:allCards withBlock:^(SetCard* card) {
-        return (int)card.count;
-    }];
-    
-
-    if ([self allEqualOrDifferent:shapes] &&
-        [self allEqualOrDifferent:shadings] &&
-        [self allEqualOrDifferent:colors] &&
-        [self allEqualOrDifferent:counts]) {
-        score = MATCH_BONUS;
-    }
-    
-    return score;
+  NSArray<SetCard*> *allCards = [cards arrayByAddingObject:self];
+  int score = MISMATCH_PENALTY;
+  
+  NSArray* shapes = [self mapCardsArray:allCards withBlock:^(SetCard* card) {
+    return (int)card.shape;
+  }];
+  NSArray* shadings = [self mapCardsArray:allCards withBlock:^(SetCard* card) {
+    return (int)card.shading;
+  }];
+  NSArray* colors = [self mapCardsArray:allCards withBlock:^(SetCard* card) {
+    return (int)card.color;
+  }];
+  NSArray* counts = [self mapCardsArray:allCards withBlock:^(SetCard* card) {
+    return (int)card.count;
+  }];
+  
+  
+  if ([self allEqualOrDifferent:shapes] &&
+      [self allEqualOrDifferent:shadings] &&
+      [self allEqualOrDifferent:colors] &&
+      [self allEqualOrDifferent:counts]) {
+    score = MATCH_BONUS;
+  }
+  
+  return score;
 }
 
 
@@ -70,7 +70,7 @@ const static int MATCH_BONUS = 10;
 
 - (NSString *) contents
 {
-    return nil;
+  return nil;
 }
 
 @end

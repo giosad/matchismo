@@ -17,12 +17,12 @@
 
 - (Deck *)createDeck //override
 {
-    return [[SetCardDeck alloc] init];
+  return [[SetCardDeck alloc] init];
 }
 -(void)viewDidLoad
 {
-    [super viewDidLoad];
-    [self startNewGame];
+  [super viewDidLoad];
+  [self startNewGame];
 }
 
 @end

@@ -14,7 +14,7 @@
 
 - (Deck *)createDeck //override
 {
-    return [[PlayingCardDeck alloc] init];
+  return [[PlayingCardDeck alloc] init];
 }
 
 @end
