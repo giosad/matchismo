@@ -6,19 +6,22 @@
 //  Copyright © 2016 LightricksNoobsDepartment. All rights reserved.
 //
 
-#import "CardGameViewController.h"
 #import "GameHistoryViewController.h"
 #import "CardMatchingGame.h"
 #import "CardView.h"
+#import "CardGameViewController.h"
+#import "PlayingCardView.h"
+#import "CardGameTableViewController.h"
 @interface CardGameViewController ()
 
 @property (strong, nonatomic) NSMutableAttributedString *gameHistory;
 @property (strong, nonatomic) CardMatchingGame *game;
-@property (strong, nonatomic) NSArray<UIView*> *cardViews;
+
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *gameModeLabel;
 @property (weak, nonatomic) IBOutlet UILabel *gameEventInfoLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeControl;
+@property (weak, nonatomic) CardGameTableViewController *gameTableController;
 @end
 
 @implementation CardGameViewController
@@ -55,19 +58,14 @@
   
   self.game = nil;  //will reset the game state
   self.gameHistory = nil; //will reset the history log
-  
+  [self.gameTableController addCardView:[[PlayingCardView alloc] initWithSuit:@"♦︎" Rank:11]];
   [self updateUI];
-  
+
   self.gameModeControl.enabled = YES;
   [self touchGameModeControl:nil]; //reset matchNumRule
 }
 
-- (IBAction)touchCard:(CardView *)sender
-{
-  [self.game chooseCardWithId:sender.cardId];
-  [self updateUI];
-  self.gameModeControl.enabled = NO;
-}
+
 
 
 - (IBAction)touchGameModeControl:(UISegmentedControl *)sender {
@@ -83,10 +81,11 @@
 
 -(void)updateUI
 {
-  for (CardView *cardView in self.cardViews) {
+  for (CardView *cardView in self.gameTableController.cardViews) {
     Card *card = [self.game cardWithId:cardView.cardId];
-    //todo: update cardView state
-    // cardButton.enabled = !card.isMatched;
+    if (card.isMatched) {
+      [self.gameTableController removeCardView:cardView];
+    }
   }
   
   self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", (int)self.game.score];
@@ -100,7 +99,29 @@
   
 }
 
+-(CardView*) newCardViewForCard:(Card*)card //abstract
+{
+  return nil;
+}
 
+-(void) setupGameTable
+{
+  self.gameTableController.cardTapEventHandler = ^(CardView* cardView) {
+    [self.game chooseCardWithId:cardView.cardId];
+    [self updateUI];
+    self.gameModeControl.enabled = NO;
+  };
+  NSArray<Card*> *cards = [self.game dealCards:1];
+  CardView* cview = [self newCardViewForCard:cards[0]];
+  cview.cardId = cards[0];
+  [self.gameTableController addCardView:cview];
+}
+
+-(void) viewWillAppear:(BOOL)animated
+{
+  NSLog(@"CardGameViewController::viewDidAppear");
+   [self setupGameTable];
+}
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
@@ -109,7 +130,15 @@
       GameHistoryViewController *ghCtrl = (GameHistoryViewController *)segue.destinationViewController;
       ghCtrl.gameHistory = self.gameHistory;
     }
+  } else if ([segue.identifier isEqualToString:@"gameTable"]) {
+    if ([segue.destinationViewController isKindOfClass:[CardGameTableViewController class]]) {
+      self.gameTableController = (CardGameTableViewController *)segue.destinationViewController;
+     
+
+    }
   }
+  
+  
 }
 
 -(NSAttributedString *)textInfoFromGameEvent:(CardMatchingGameEvent *)event

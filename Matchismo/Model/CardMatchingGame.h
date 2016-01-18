@@ -17,7 +17,7 @@
 
 -(void)chooseCardWithId:(id)carId;
 -(Card*)cardWithId:(id)cardId;
--(NSArray<Card*>*) drawNewCards:(NSUInteger)count;
+-(NSArray<Card*>*) dealCards:(NSUInteger)count;
 @property (nonatomic) NSUInteger matchNumRule;
 @property (strong, nonatomic) CardMatchingGameEvent* lastEvent;
 @property (nonatomic, readonly) NSInteger score;

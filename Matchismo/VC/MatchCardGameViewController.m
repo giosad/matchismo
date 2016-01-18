@@ -9,12 +9,18 @@
 #import "MatchCardGameViewController.h"
 #import "PlayingCardDeck.h"
 #import "PlayingCard.h"
-
+#import "PlayingCardView.h"
 @implementation MatchCardGameViewController
 
 - (Deck *)createDeck //override
 {
   return [[PlayingCardDeck alloc] init];
+}
+
+-(CardView*) newCardViewForCard:(Card*)card //override
+{
+  PlayingCard *playingCard = (PlayingCard*)card;
+  return [[PlayingCardView alloc] initWithSuit:playingCard.suit Rank:playingCard.rank];
 }
 
 @end

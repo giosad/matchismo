@@ -5,8 +5,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface PlayingCardView : CardView
 
-@property (nonatomic) NSUInteger rank;
-@property (strong, nonatomic) NSString *suit;
+@property (nonatomic, readonly) NSUInteger rank;
+@property (strong, nonatomic, readonly) NSString *suit;
+
+
+- (instancetype) initWithSuit:(NSString*)suit Rank:(NSUInteger)rank;
+- (instancetype)initWithFrame:(CGRect)frame NS_UNAVAILABLE;
+- (instancetype) init NS_UNAVAILABLE;
 @end
 
 NS_ASSUME_NONNULL_END

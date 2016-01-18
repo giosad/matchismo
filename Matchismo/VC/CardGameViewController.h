@@ -8,10 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "Deck.h"
+#import "CardView.h"
 @interface CardGameViewController : UIViewController
 
 //abstract, should return a deck of card that follow a certain match rule
 - (Deck *)createDeck;
+
+-(CardView*) newCardViewForCard:(Card*)card; //abstract
+
 
 -(void)startNewGame;
 @end

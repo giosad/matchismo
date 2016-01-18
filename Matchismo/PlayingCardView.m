@@ -4,26 +4,27 @@
 #import "PlayingCardView.h"
 
 NS_ASSUME_NONNULL_BEGIN
+@interface PlayingCardView()
+@property (nonatomic, readwrite) NSUInteger rank;
+@property (strong, nonatomic, readwrite) NSString *suit;
+@end
 
 @implementation PlayingCardView
 
 
-- (void)setSuit:(NSString *)suit
-{
-  _suit = suit;
-  [self setNeedsDisplay];
-}
-
-- (void)setRank:(NSUInteger)rank
-{
-  _rank = rank;
-  [self setNeedsDisplay];
-}
-
 #define PIP_FONT_SCALE_FACTOR 0.20
 #define CORNER_OFFSET 2.0
 
--(NSAttributedString* ) cornerText
+
+- (instancetype) initWithSuit:(NSString*)suit Rank:(NSUInteger)rank
+{
+  if (self = [super init]) {
+    self.rank = rank;
+    self.suit = suit;
+  }
+  return self;
+}
+-(NSMutableAttributedString* ) cornerText
 {
   NSMutableAttributedString *title = [[NSMutableAttributedString alloc] init];
   
@@ -50,7 +51,8 @@ NS_ASSUME_NONNULL_BEGIN
 
                                                       
 
-  [title addAttributes:@{ NSParagraphStyleAttributeName : paragraphStyle, NSFontAttributeName : cornerFont }
+  [title addAttributes:@{ NSParagraphStyleAttributeName : paragraphStyle,
+                                    NSFontAttributeName : cornerFont }
                  range:NSMakeRange(0, [title length])];
 
   //
@@ -62,12 +64,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (NSString *)rankAsString
 {
-  return @[@"A",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"J",@"Q",@"K"][self.rank];
+  return @[@"?", @"A",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"J",@"Q",@"K"][self.rank];
 }
 
 - (void) drawFace
 {
-  UIImage *faceImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@.jpg", [self rankAsString], self.suit]];
+  UIImage *faceImage = [UIImage imageNamed:[NSString stringWithFormat:@"%@%@",
+                                            [self rankAsString], self.suit]];
   if (faceImage) {
     CGRect imageRect = CGRectInset(self.bounds,
                                    self.bounds.size.width * (1.0 - self.faceCardScaleFactor),
@@ -88,7 +91,10 @@ NS_ASSUME_NONNULL_BEGIN
   
   UIFont *cornerFont = [UIFont systemFontOfSize:self.bounds.size.width * PIP_FONT_SCALE_FACTOR];
   
-  NSAttributedString *cornerText = [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%@\n%@", [self rankAsString], self.suit] attributes:@{ NSParagraphStyleAttributeName : paragraphStyle, NSFontAttributeName : cornerFont }];
+  NSMutableAttributedString *cornerText = [self cornerText];
+  [cornerText addAttributes:@{NSParagraphStyleAttributeName : paragraphStyle,
+                                        NSFontAttributeName : cornerFont }
+                      range: NSMakeRange(0, [cornerText length])];
   
   CGRect textBounds;
   textBounds.origin = CGPointMake(CORNER_OFFSET, CORNER_OFFSET);

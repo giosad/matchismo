@@ -91,6 +91,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void)setup
 {
   // do initialization here
+  self.opaque = NO;
 }
 
 - (void)awakeFromNib
@@ -98,7 +99,7 @@ NS_ASSUME_NONNULL_BEGIN
   [self setup];
 }
 
-- (id)initWithFrame:(CGRect)frame
+- (instancetype)initWithFrame:(CGRect)frame
 {
   if (self = [super initWithFrame:frame]) {
     [self setup];

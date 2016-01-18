@@ -17,12 +17,8 @@
 
 @implementation CardMatchingGame
 
-- (NSMutableArray *)cards
-{
-  if (!_cards) _cards = [[NSMutableArray alloc] init];
-  return _cards;
-}
 
+#pragma mark Initializers
 - (instancetype)init
 {
   return nil;
@@ -38,7 +34,18 @@
   return self;
 }
 
--(NSArray<Card*>* ) drawNewCards:(NSUInteger)count
+
+#pragma mark -
+
+
+- (NSMutableArray *)cards
+{
+  if (!_cards) _cards = [[NSMutableArray alloc] init];
+  return _cards;
+}
+
+
+-(NSArray<Card*>* ) dealCards:(NSUInteger)count
 {
   NSMutableArray<Card*>* newCards = [[NSMutableArray<Card*> alloc] init];
   for (int i = 0; i < count; i++) {

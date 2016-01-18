@@ -13,7 +13,7 @@
 - (int)matchOtherCard:(PlayingCard *) otherCard;
 @end
 @implementation PlayingCard
-#pragma mark initializers
+#pragma mark - Initializers
 - (instancetype) init
 {
   return nil;
@@ -87,7 +87,7 @@ const static int MISMATCH_PENALTY = -2;
 
 + (NSUInteger)maxRank
 {
-  return 12;
+  return 13;
 }
 
 
