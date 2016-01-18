@@ -8,11 +8,28 @@
 
 #import "CardMatchingGameEvent.h"
 
+@interface CardMatchingGameEvent()
+@property (nonatomic,readwrite) NSInteger score;
+@property (strong, nonatomic, readwrite) NSArray<Card* > *cardsReported;
+@end
+
+
 @implementation CardMatchingGameEvent
--(NSMutableArray *)cardsParticipated
+
+
+- (instancetype) init
 {
-    if (!_cardsParticipated) _cardsParticipated = [[NSMutableArray<Card*> alloc] init];
-    return _cardsParticipated;
+  return nil;
+}
+
+
+- (instancetype) initWithScore:(NSInteger)score cardsToReport:(NSArray<Card*>*)cards
+{
+  if (self = [super init]) {
+    self.score = score;
+    self.cardsReported = cards;
+  }
+  return self;
 }
 
 @end

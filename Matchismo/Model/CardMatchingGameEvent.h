@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "Card.h"
 @interface CardMatchingGameEvent : NSObject
-@property (nonatomic) NSInteger score;
-@property (strong, nonatomic) NSMutableArray<Card* > *cardsParticipated;
+- (instancetype) init NS_UNAVAILABLE;
+- (instancetype) initWithScore:(NSInteger)score cardsToReport:(NSArray<Card*>*)cards NS_DESIGNATED_INITIALIZER;
+@property (nonatomic,readonly) NSInteger score;
+@property (strong, nonatomic, readonly) NSArray<Card* > *cardsReported;
 @end

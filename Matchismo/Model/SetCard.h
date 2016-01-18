@@ -9,31 +9,17 @@
 #import "Card.h"
 #import <UIKit/UIColor.h>
 
-typedef NS_ENUM(NSUInteger, SetCardShape) {
-    SetCardShapeCircle,
-    SetCardShapeRectangle,
-    SetCardShapeTriangle,
-    SetCardShapeCount
-};
 
-typedef NS_ENUM(NSUInteger, SetCardShading) {
-    SetCardShadingStripes,
-    SetCardShadingFull,
-    SetCardShadingEmpty,
-    SetCardShadingCount
-};
+extern const NSUInteger kSetCardShapeNumCount;
+extern const NSUInteger kSetCardShapeTypeCount;
+extern const NSUInteger kSetCardColorCount;
+extern const NSUInteger kSetCardShadingCount;
 
-typedef NS_ENUM(NSUInteger, SetCardColor) {
-    SetCardColorRed,
-    SetCardColorGreen,
-    SetCardColorBlue,
-    SetCardColorCount
-};
 
 @interface SetCard : Card
-@property (nonatomic) SetCardShape shape;
-@property (nonatomic) SetCardShading shading;
-@property (nonatomic) SetCardColor color;
+@property (nonatomic) NSUInteger shape;
+@property (nonatomic) NSUInteger shading;
+@property (nonatomic) NSUInteger color;
 @property (nonatomic) NSUInteger count;
-+(int)maxCount;
+
 @end

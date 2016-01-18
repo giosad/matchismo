@@ -67,29 +67,31 @@
 -(void)checkMatchesToCard:(Card *)card
 {
   int cardsToCheckNum = (int)self.matchNumRule - 1; //minus the card we clicked on now
-  CardMatchingGameEvent* ev = [[CardMatchingGameEvent alloc] init];
-  self.lastEvent = ev;
+  NSInteger matchScore = 0;
   
-  NSArray* cardsChosen = [self getCardsChosenAndNotMatched];
-  [ev.cardsParticipated addObjectsFromArray:cardsChosen];
-  [ev.cardsParticipated addObject:card];
+  NSArray<Card*> *cardsChosen = [self getCardsChosenAndNotMatched];
+
   
   //if didn't finish choosing cards up to the policy amount
   if ([cardsChosen count] < cardsToCheckNum) {
-    ev.score = 0;
+    matchScore = 0;
   } else {
-    ev.score = [card match:cardsChosen];
-    if (ev.score > 0) {
+    matchScore = [card match:cardsChosen];
+    if (matchScore > 0) {
       card.matched = YES;
     }
     
     for (Card *otherCard in cardsChosen) {
-      otherCard.chosen = ev.score > 0 ? YES : NO;
-      otherCard.matched = ev.score > 0 ? YES : NO;
+      otherCard.chosen = matchScore > 0 ? YES : NO;
+      otherCard.matched = matchScore > 0 ? YES : NO;
     }
   }
-  self.score += ev.score;
+  self.score += matchScore;
   
+  
+  NSMutableArray<Card*> *cardsReported = [cardsChosen mutableCopy];
+  [cardsReported addObject:card];
+  CardMatchingGameEvent* ev = [[CardMatchingGameEvent alloc] initWithScore:matchScore cardsToReport:cardsReported];
   self.lastEvent = ev;
 }
 

@@ -8,10 +8,16 @@
 
 #import "SetCard.h"
 
+const NSUInteger kSetCardShapeNumCount = 3;
+const NSUInteger kSetCardShapeTypeCount = 3;
+const NSUInteger kSetCardColorCount = 3;
+const NSUInteger kSetCardShadingCount = 3;
+
 @implementation SetCard
-+(int)maxCount {
-    return 3;
-}
+
+
+
+
 const static int MISMATCH_PENALTY = -3;
 const static int MATCH_BONUS = 10;
 

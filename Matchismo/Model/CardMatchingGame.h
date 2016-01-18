@@ -12,8 +12,9 @@
 
 @interface CardMatchingGame : NSObject
 
-//designated initializer
-- (instancetype)initWithDeck:(Deck*)deck;
+- (instancetype)init NS_UNAVAILABLE;
+- (instancetype)initWithDeck:(Deck*)deck NS_DESIGNATED_INITIALIZER;
+
 -(void)chooseCardWithId:(id)carId;
 -(Card*)cardWithId:(id)cardId;
 -(NSArray<Card*>*) drawNewCards:(NSUInteger)count;
