@@ -8,12 +8,31 @@
 
 #import "PlayingCard.h"
 @interface PlayingCard()
-
+@property (strong, nonatomic, readwrite) NSString *suit;
+@property (nonatomic, readwrite) NSUInteger rank;
 - (int)matchOtherCard:(PlayingCard *) otherCard;
 @end
 @implementation PlayingCard
+#pragma mark initializers
+- (instancetype) init
+{
+  return nil;
+}
 
+- (instancetype) initWithRank:(NSUInteger)rank suit:(NSString *)suit
+{
+  if (self = [super init]) {
+    if ([[PlayingCard validSuits] containsObject:suit]) {
+      self.suit = suit;
+    }
+    if (rank <= [PlayingCard maxRank]) {
+      self.rank = rank;
+    }
+  }
+  return self;
+}
 
+#pragma mark -
 
 - (int)matchOtherCard:(PlayingCard *) otherCard
 {
@@ -26,6 +45,7 @@
 
     return score;
 }
+
 
 
 const static int MISMATCH_PENALTY = -2;
@@ -59,21 +79,9 @@ const static int MISMATCH_PENALTY = -2;
 }
 
 
-@synthesize suit = _suit; // because we provide setter AND getter
-
 + (NSArray *)validSuits
 {
     return @[@"♣︎", @"♠︎", @"♦︎", @"♥︎"];
-}
-- (void)setSuit:(NSString *)suit
-{
-    if ([[PlayingCard validSuits] containsObject:suit]) {
-        _suit = suit;
-    }
-}
-- (NSString *)suit
-{
-    return _suit ? _suit : @"?";
 }
 
 
@@ -83,11 +91,5 @@ const static int MISMATCH_PENALTY = -2;
 }
 
 
--(void)setRank:(NSUInteger) rank
-{
-    if (rank <= [PlayingCard maxRank]) {
-        _rank = rank;
-    }
-}
 
 @end
