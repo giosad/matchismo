@@ -4,28 +4,30 @@
 #import "SetCardView.h"
 
 NS_ASSUME_NONNULL_BEGIN
-typedef NS_ENUM(NSUInteger, SetCardShape) {
-  SetCardShapeCircle,
-  SetCardShapeRectangle,
-  SetCardShapeTriangle,
-  SetCardShapeCount
-};
 
-typedef NS_ENUM(NSUInteger, SetCardShading) {
-  SetCardShadingStripes,
-  SetCardShadingFull,
-  SetCardShadingEmpty,
-  SetCardShadingCount
-};
-
-typedef NS_ENUM(NSUInteger, SetCardColor) {
-  SetCardColorRed,
-  SetCardColorGreen,
-  SetCardColorBlue,
-  SetCardColorCount
-};
-
+@interface SetCardView()
+@property (nonatomic, readwrite) SetCardShape shape;
+@property (nonatomic, readwrite) SetCardShading shading;
+@property (nonatomic, readwrite) SetCardColor color;
+@property (nonatomic, readwrite) NSUInteger count;
+@end
 @implementation SetCardView
+- (instancetype) initWithShape:(SetCardShape)shape Shading:(SetCardShading)shading Color:(SetCardColor)color Count:(NSUInteger)count
+{
+  if (self = [super init]) {
+    self.shape = shape;
+    self.shading = shading;
+    self.color = color;
+    self.count = count;
+  }
+  return self;
+
+}
+
+
+- (void) drawCardInners //override
+{
+}
 
 @end
 

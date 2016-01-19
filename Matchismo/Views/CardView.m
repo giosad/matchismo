@@ -19,10 +19,12 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark - Drawing
 
 #define CORNER_RADIUS 12.0
-- (void)drawFace
+- (void)drawCardInners
 {
 //stub, needs to be overriden
 }
+
+
 - (void)drawRect:(CGRect)rect
 {
   // Drawing code
@@ -33,11 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
   [[UIColor whiteColor] setFill];
   UIRectFill(self.bounds);
   
-  if (self.faceUp) {
-    [self drawFace];
-  } else {
-    [[UIImage imageNamed:@"cardback.png"] drawInRect:self.bounds];
-  }
+  [self drawCardInners];
   
   [[UIColor blackColor] setStroke];
   [roundedRect stroke];
@@ -56,9 +54,9 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 
-- (void)setFaceUp:(BOOL)faceUp
+- (void)setChoosen:(BOOL)chosen
 {
-  _faceUp = faceUp;
+  _choosen = chosen;
   [self setNeedsDisplay];
 }
 

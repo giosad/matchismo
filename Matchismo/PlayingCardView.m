@@ -24,6 +24,7 @@ NS_ASSUME_NONNULL_BEGIN
   }
   return self;
 }
+
 -(NSMutableAttributedString* ) cornerText
 {
   NSMutableAttributedString *title = [[NSMutableAttributedString alloc] init];
@@ -66,6 +67,16 @@ NS_ASSUME_NONNULL_BEGIN
 {
   return @[@"?", @"A",@"2",@"3",@"4",@"5",@"6",@"7",@"8",@"9",@"10",@"J",@"Q",@"K"][self.rank];
 }
+
+- (void) drawCardInners //override
+{
+  if (self.choosen) {
+    [self drawFace];
+  } else {
+    [[UIImage imageNamed:@"cardback.png"] drawInRect:self.bounds];
+  }
+}
+
 
 - (void) drawFace
 {

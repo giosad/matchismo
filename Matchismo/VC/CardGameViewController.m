@@ -10,7 +10,6 @@
 #import "CardMatchingGame.h"
 #import "CardView.h"
 #import "CardGameViewController.h"
-#import "PlayingCardView.h"
 #import "CardGameTableViewController.h"
 
 @interface CardGameViewController ()
@@ -59,7 +58,7 @@
   
   self.game = nil;  //will reset the game state
   self.gameHistory = nil; //will reset the history log
-  [self.gameTableController addCardView:[[PlayingCardView alloc] initWithSuit:@"♦︎" Rank:11]];
+  [self dealCards:10];
   [self updateUI];
 
   self.gameModeControl.enabled = YES;
@@ -83,7 +82,12 @@
 -(void)updateUI
 {
   for (CardView *cardView in self.gameTableController.cardViews) {
+    
     Card *card = [self.game cardWithId:cardView.cardId];
+    if (card.isChosen) {
+      [self.gameTableController selectCardView:cardView];
+    }
+
     if (card.isMatched) {
       [self.gameTableController removeCardView:cardView];
     }
@@ -105,14 +109,10 @@
   return nil;
 }
 
--(void) setupGameTable
+
+-(void) dealCards:(NSUInteger)cardsAmount
 {
-  self.gameTableController.cardTapEventHandler = ^(CardView* cardView) {
-    [self.game chooseCardWithId:cardView.cardId];
-    [self updateUI];
-    self.gameModeControl.enabled = NO;
-  };
-  NSArray<Card*> *cards = [self.game dealCards:20];
+  NSArray<Card*> *cards = [self.game dealCards:cardsAmount];
   for (Card* card in cards) {
     CardView* cview = [self newCardViewForCard:card];
     cview.cardId = card;
@@ -120,16 +120,27 @@
   }
 }
 
+-(void) setupGameTable
+{
+  self.gameTableController.cardTapEventHandler = ^(CardView* cardView) {
+    [self.game chooseCardWithId:cardView.cardId];
+    [self updateUI];
+    self.gameModeControl.enabled = NO;
+  };
+
+}
+
 -(void) viewWillAppear:(BOOL)animated
 {
   [super viewWillAppear:animated];
   NSLog(@"CardGameViewController::viewWillAppear");
+    [self setupGameTable];
   
 }
 -(void) viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  [self setupGameTable];
+
   NSLog(@"CardGameViewController::viewDidAppear");
 }
 

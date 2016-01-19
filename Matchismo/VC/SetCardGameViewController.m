@@ -19,10 +19,20 @@
 {
   return [[SetCardDeck alloc] init];
 }
--(void)viewDidLoad
+
+-(CardView*) newCardViewForCard:(Card*)card //override
 {
-  [super viewDidLoad];
-  [self startNewGame];
+  SetCard *setCard = (SetCard*)card;
+  return [[SetCardView alloc] initWithShape:setCard.shape
+                                    Shading:setCard.shading
+                                      Color:setCard.color
+                                      Count:setCard.count];
 }
+
+//-(void)viewDidLoad
+//{
+//  [super viewDidLoad];
+//  [self startNewGame];
+//}
 
 @end

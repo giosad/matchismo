@@ -12,7 +12,7 @@ typedef void (^CardTapEventHandlerType)(CardView*);
 
 - (void) addCardView:(CardView*)cardView;
 - (void) removeCardView:(CardView*)cardView;
-
+- (void) selectCardView:(CardView*)cardView;
 
 @end
 
