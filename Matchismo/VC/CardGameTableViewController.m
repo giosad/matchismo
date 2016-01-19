@@ -12,10 +12,18 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 @implementation CardGameTableViewController
+
+-(Grid*) grid
+{
+  if (!_grid) {
+    _grid = [[Grid alloc] init];
+  }
+  return _grid;
+}
 - (void) addCardView:(CardView*)cardView
 {
   [self.cardViewsInternal addObject:cardView];
-  cardView.frame = [self.grid frameOfCellAtRow:0 inColumn:0];
+//  cardView.frame = [self.grid frameOfCellAtRow:0 inColumn:0];
   [self.view addSubview:cardView];
   UITapGestureRecognizer *singleFingerTap =
   [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleCardTap:)];
@@ -27,15 +35,32 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) removeCardView:(CardView*)cardView
 {
+
+  NSUInteger i = [self.cardViewsInternal indexOfObject:cardView];
+  if(i == NSNotFound) {
+    return;
+  }
+
+  CardView* lastView = [self.cardViewsInternal lastObject];
+  if (lastView != cardView) {
+    self.cardViewsInternal[i] = [self.cardViewsInternal lastObject];
+    [self.cardViewsInternal removeLastObject];
+  }
   //todo animation
-  [self.cardViewsInternal removeObject:cardView];
+  
   [cardView removeFromSuperview];
 }
--(NSArray<CardView*>*) cardViews
+-(NSArray<CardView*> *)cardViews
 {
   return [self.cardViewsInternal copy];
 }
-
+-(NSMutableArray<CardView*> *)cardViewsInternal
+{
+  if (!_cardViewsInternal) {
+    _cardViewsInternal = [[NSMutableArray<CardView*> alloc] init];
+  }
+  return _cardViewsInternal;
+}
 
 - (void)handleCardTap:(UITapGestureRecognizer *)sender
 {
@@ -45,16 +70,54 @@ NS_ASSUME_NONNULL_BEGIN
   }
 }
 
+-(void) alignCardsToViewSize:(CGSize)newSize
+{
+  if ((self.grid.size.height == newSize.height) &&
+      (self.grid.size.width == newSize.width)){
+    return; //nothing to do
+  }
+  self.grid.size = newSize;
+  self.grid.cellAspectRatio = 0.7;
+  self.grid.minimumNumberOfCells = 30;
+    
+  int pos = 0;
+  for (CardView *cardView in self.cardViewsInternal) {
+    NSUInteger row = pos / self.grid.columnCount;
+    NSUInteger col = pos % self.grid.columnCount;
+    [UIView animateWithDuration:2.0 animations:^{
+      
+      cardView.frame = [self.grid frameOfCellAtRow:row inColumn:col];
+      
+    }];
+    
+    pos++;
+    //  [cardView setNeedsDisplay];
+    
+  }
+  
+}
+
+-(void) viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
+{
+  [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
+    NSLog(@"CardGameTableViewController::viewWillTransitionToSize");
+  [self alignCardsToViewSize:size];
+}
+
 -(void) viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-  self.grid = [[Grid alloc] init];
-  self.grid.size = self.view.bounds.size;
-  self.grid.cellAspectRatio = 0.7;
-  self.grid.minimumNumberOfCells = 20;
-  NSLog(@"CardGameTableViewController::viewDidAppear");
- //todo implement the reordering
-  
+  NSLog(@"CardGameTableViewController::viewDidAppear %d", animated);
+  [self alignCardsToViewSize:self.view.bounds.size];
+}
+
+
+-(void) viewWillAppear:(BOOL)animated
+{
+  [super viewWillAppear:animated];
+
+
+  NSLog(@"CardGameTableViewController::viewWillAppear");
 }
 @end
 

@@ -90,16 +90,13 @@
 		307658361C42C01100E83423 /* VC */ = {
 			isa = PBXGroup;
 			children = (
+				3076586B1C4E2C8300E83423 /* GameSpecific */,
 				3076584B1C47CB3F00E83423 /* Grid.h */,
 				3076584C1C47CB3F00E83423 /* Grid.m */,
-				30A046CF1C3AB52400786AF7 /* CardGameViewController.h */,
-				30A046D01C3AB52400786AF7 /* CardGameViewController.m */,
-				3076583A1C438F8E00E83423 /* MatchCardGameViewController.h */,
-				3076583B1C438F8E00E83423 /* MatchCardGameViewController.m */,
-				3076583D1C43909800E83423 /* SetCardGameViewController.h */,
-				3076583E1C43909800E83423 /* SetCardGameViewController.m */,
 				307658461C43F3B900E83423 /* GameHistoryViewController.h */,
 				307658471C43F3B900E83423 /* GameHistoryViewController.m */,
+				30A046CF1C3AB52400786AF7 /* CardGameViewController.h */,
+				30A046D01C3AB52400786AF7 /* CardGameViewController.m */,
 				307658671C4D1F8400E83423 /* CardGameTableViewController.h */,
 				307658681C4D1F8400E83423 /* CardGameTableViewController.m */,
 			);
@@ -118,6 +115,17 @@
 				307658621C4BEFDD00E83423 /* SetCardView.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		3076586B1C4E2C8300E83423 /* GameSpecific */ = {
+			isa = PBXGroup;
+			children = (
+				3076583A1C438F8E00E83423 /* MatchCardGameViewController.h */,
+				3076583B1C438F8E00E83423 /* MatchCardGameViewController.m */,
+				3076583D1C43909800E83423 /* SetCardGameViewController.h */,
+				3076583E1C43909800E83423 /* SetCardGameViewController.m */,
+			);
+			name = GameSpecific;
 			sourceTree = "<group>";
 		};
 		30A046BD1C3AB52400786AF7 = {

@@ -9,7 +9,7 @@
 
 
 #import "Grid.h"
-
+NS_ASSUME_NONNULL_BEGIN
 @interface Grid()
 @property (nonatomic) BOOL resolved;
 @property (nonatomic) BOOL unresolvable;
@@ -213,3 +213,4 @@
 }
 
 @end
+NS_ASSUME_NONNULL_END

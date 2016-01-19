@@ -12,6 +12,7 @@
 #import "CardGameViewController.h"
 #import "PlayingCardView.h"
 #import "CardGameTableViewController.h"
+
 @interface CardGameViewController ()
 
 @property (strong, nonatomic) NSMutableAttributedString *gameHistory;
@@ -111,16 +112,25 @@
     [self updateUI];
     self.gameModeControl.enabled = NO;
   };
-  NSArray<Card*> *cards = [self.game dealCards:1];
-  CardView* cview = [self newCardViewForCard:cards[0]];
-  cview.cardId = cards[0];
-  [self.gameTableController addCardView:cview];
+  NSArray<Card*> *cards = [self.game dealCards:20];
+  for (Card* card in cards) {
+    CardView* cview = [self newCardViewForCard:card];
+    cview.cardId = card;
+    [self.gameTableController addCardView:cview];
+  }
 }
 
 -(void) viewWillAppear:(BOOL)animated
 {
+  [super viewWillAppear:animated];
+  NSLog(@"CardGameViewController::viewWillAppear");
+  
+}
+-(void) viewDidAppear:(BOOL)animated
+{
+  [super viewDidAppear:animated];
+  [self setupGameTable];
   NSLog(@"CardGameViewController::viewDidAppear");
-   [self setupGameTable];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -133,8 +143,6 @@
   } else if ([segue.identifier isEqualToString:@"gameTable"]) {
     if ([segue.destinationViewController isKindOfClass:[CardGameTableViewController class]]) {
       self.gameTableController = (CardGameTableViewController *)segue.destinationViewController;
-     
-
     }
   }
   

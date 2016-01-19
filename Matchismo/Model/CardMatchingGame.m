@@ -8,6 +8,8 @@
 
 #import "CardMatchingGame.h"
 #import "CardMatchingGameEvent.h"
+
+NS_ASSUME_NONNULL_BEGIN
 @interface CardMatchingGame()
 @property (nonatomic, readwrite) NSInteger score;
 @property (nonatomic, strong) NSMutableArray<Card*> *cards;
@@ -122,3 +124,4 @@ static const int COST_TO_CHOOSE = 1;
   return (Card*)cardId;
 }
 @end
+NS_ASSUME_NONNULL_END

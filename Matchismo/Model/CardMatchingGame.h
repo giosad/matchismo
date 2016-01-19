@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Deck.h"
 #import "CardMatchingGameEvent.h"
-
+NS_ASSUME_NONNULL_BEGIN
 @interface CardMatchingGame : NSObject
 
 - (instancetype)init NS_UNAVAILABLE;
@@ -23,3 +23,4 @@
 @property (nonatomic, readonly) NSInteger score;
 
 @end
+NS_ASSUME_NONNULL_END

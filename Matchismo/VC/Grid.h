@@ -25,7 +25,7 @@
 // inputsAreValid will tell you whether your 3 inputs are okay
 //
 // Setting minimum cell widths and heights is completely optional ({min,max}Cell{Width,Height})
-
+NS_ASSUME_NONNULL_BEGIN
 @interface Grid : NSObject
 
 // required inputs (zero is not a valid value for any of these)
@@ -55,3 +55,4 @@
 - (CGRect)frameOfCellAtRow:(NSUInteger)row inColumn:(NSUInteger)column;
 
 @end
+NS_ASSUME_NONNULL_END

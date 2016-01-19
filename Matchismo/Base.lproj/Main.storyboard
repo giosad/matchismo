@@ -306,7 +306,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zvL-47-XBJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2365" y="1052"/>
+            <point key="canvasLocation" x="2300" y="1026.5"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
