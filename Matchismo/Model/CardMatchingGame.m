@@ -30,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
   if (self = [super init]) {
     self.deck = deck;
-    self.matchNumRule = 2;
+    self.matchNumRule = 2; 
   }
   
   return self;
@@ -38,6 +38,11 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 #pragma mark -
+-(void)  setMatchNumRule:(NSUInteger)v
+{
+  NSLog(@"setMatchNumRule %d", v);
+  _matchNumRule = v;
+}
 
 
 - (NSMutableArray *)cards
@@ -97,7 +102,6 @@ NS_ASSUME_NONNULL_BEGIN
     }
   }
   self.score += matchScore;
-  
   
   NSMutableArray<Card*> *cardsReported = [cardsChosen mutableCopy];
   [cardsReported addObject:card];

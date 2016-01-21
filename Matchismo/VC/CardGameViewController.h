@@ -10,6 +10,8 @@
 #import "Deck.h"
 #import "CardView.h"
 #import "CardGameTableViewController.h"
+#import "CardMatchingGame.h"
+
 NS_ASSUME_NONNULL_BEGIN
 @interface CardGameViewController : UIViewController
 
@@ -18,12 +20,16 @@ NS_ASSUME_NONNULL_BEGIN
 
 -(CardView*) newCardViewForCard:(Card*)card; //abstract
 
--(void) setupGameTable; //protected, may be extended
+-(void) setupGameTable; //protected//, may be extended
 
 
-
+//protected//
 -(void)startNewGame;
 
-@property (weak, nonatomic) CardGameTableViewController *gameTableController; //protected?
+
+//protected//
+@property (weak, nonatomic) CardGameTableViewController *gameTableController;
+//protected//
+@property (strong, nonatomic) CardMatchingGame *game;
 @end
 NS_ASSUME_NONNULL_END

@@ -39,6 +39,14 @@
   [super setupGameTable];
   self.gameTableController.closeGapsWhenCardsRemoved = YES;
   self.gameTableController.cardChooseAnimation = UIViewAnimationOptionTransitionCrossDissolve;
+
 }
 
+
+-(void)startNewGame
+{
+  [super startNewGame];
+  
+  self.game.matchNumRule = 3;
+}
 @end

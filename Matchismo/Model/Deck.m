@@ -42,6 +42,7 @@
   Card *randomCard = nil;
   if ([self.cards count]) {
     unsigned index = arc4random() % [self.cards count];
+    //index = 0;
     randomCard = self.cards[index];
     [self.cards removeObjectAtIndex:index];
   }

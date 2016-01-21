@@ -15,7 +15,7 @@
 @interface CardGameViewController ()
 
 @property (strong, nonatomic) NSMutableAttributedString *gameHistory;
-@property (strong, nonatomic) CardMatchingGame *game;
+
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *gameModeLabel;
@@ -64,10 +64,8 @@
   [self.gameTableController removeAllCardViews];
   
   [self dealCards:12];
-//  [self updateUI];
 
   self.gameModeControl.enabled = YES;
-  [self touchGameModeControl:nil]; //reset matchNumRule
 }
 
 
@@ -92,7 +90,7 @@
   for (CardView *cardView in self.gameTableController.cardViews) {
     Card *card = [self.game cardWithId:cardView.cardId];
     if (card.chosen) {
-      [self.gameTableController updateCardView:cardView choosen:card.chosen];
+      [self.gameTableController updateCardView:cardView chosen:card.chosen];
     }
   }
   
@@ -101,7 +99,7 @@
   for (CardView *cardView in self.gameTableController.cardViews) {
     Card *card = [self.game cardWithId:cardView.cardId];
     if (!card.chosen) {
-      [self.gameTableController updateCardView:cardView choosen:card.chosen];
+      [self.gameTableController updateCardView:cardView chosen:card.chosen];
     }
   }
   

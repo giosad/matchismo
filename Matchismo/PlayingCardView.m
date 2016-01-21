@@ -73,7 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) drawCardInners //override
 {
-  if (self.choosen) {
+  if (self.chosen) {
     [self drawFace];
   } else {
     [[UIImage imageNamed:@"cardback.png"] drawInRect:self.bounds];

@@ -7,14 +7,21 @@ NS_ASSUME_NONNULL_BEGIN
 typedef void (^CardTapEventHandlerType)(CardView*);
 
 @interface CardGameTableViewController : UIViewController
-@property (nonatomic, readonly) NSArray<CardView*> *cardViews;
+
+
 @property (strong, nonatomic) CardTapEventHandlerType cardTapEventHandler;
+@property (nonatomic, readonly) NSArray<CardView*> *cardViews;
+
+//protected//
 @property (nonatomic)BOOL closeGapsWhenCardsRemoved;
+
+//protected//
 @property (nonatomic) UIViewAnimationOptions cardChooseAnimation;
+
 - (void) addCardView:(CardView*)cardView;
 - (void) removeAllCardViews;
 - (void) removeCardView:(CardView*)cardView;
-- (void) updateCardView:(CardView*)cardView choosen:(BOOL)isChoosen;
+- (void) updateCardView:(CardView*)cardView chosen:(BOOL)ischosen;
 
 
 @end

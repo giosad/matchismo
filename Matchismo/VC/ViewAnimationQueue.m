@@ -4,7 +4,7 @@
 #import "ViewAnimationQueue.h"
 
 NS_ASSUME_NONNULL_BEGIN
-typedef void (^anim_block)(void) ;
+
 @interface ViewAnimationQueue()
 //NSDictionary<id, NSValue*>* animationQueues;
 @property (nonatomic) NSMutableArray<anim_block> *animationQueue;
@@ -40,7 +40,7 @@ typedef void (^anim_block)(void) ;
 }
 
 
--(void)animateWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^ __nullable)(BOOL finished))completion
+-(void)animateWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options animations:(anim_block)animations completion:(completion_block)completion
 {
 //  NSLog(@"animateWithDuration qCount %d", (int)[self.animationQueue count]);
 
@@ -68,7 +68,7 @@ typedef void (^anim_block)(void) ;
 }
 
 
-- (void)transitionWithView:(UIView *)view duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^ __nullable)(void))animations completion:(void (^ __nullable)(BOOL finished))completion
+- (void)transitionWithView:(UIView *)view duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(anim_block)animations completion:(completion_block)completion
 {
   __weak ViewAnimationQueue* blockSelf = self;
   [self.animationQueue addObject: ^() {
@@ -80,6 +80,29 @@ typedef void (^anim_block)(void) ;
   
   
   [self tryRunNextAnimation];
+}
+
+- (void)transitionWithView:(UIView *)view duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animationConditions:(condition_block)conditions animations:(anim_block)animations completion:(completion_block)completion
+{
+  __weak ViewAnimationQueue* blockSelf = self;
+  [self.animationQueue addObject: ^() {
+    if (conditions && conditions()) {
+      [UIView transitionWithView:view duration:duration options:options animations:animations completion:^(BOOL finished) {
+        if (completion) completion(finished);
+        blockSelf.animationInProgress = NO;
+        [blockSelf tryRunNextAnimation];
+      }];
+    } else {
+      blockSelf.animationInProgress = NO;
+      [blockSelf tryRunNextAnimation];
+    }
+  }];
+  
+  
+  [self tryRunNextAnimation];
+
+
+
 }
 @end
 

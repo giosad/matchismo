@@ -54,9 +54,9 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 
-- (void)setChoosen:(BOOL)chosen
+- (void)setChosen:(BOOL)chosen
 {
-  _choosen = chosen;
+  _chosen = chosen;
   [self setNeedsDisplay];
 }
 

@@ -6,7 +6,7 @@ NS_ASSUME_NONNULL_BEGIN
 @interface CardView : UIView
 
 @property (nonatomic, weak) id cardId;
-@property (nonatomic) BOOL choosen;
+@property (nonatomic) BOOL chosen;
 @property (nonatomic) CGFloat faceCardScaleFactor;
 - (void)pinch:(UIPinchGestureRecognizer *)gesture;
 - (void)drawCardInners;

@@ -50,16 +50,24 @@ NS_ASSUME_NONNULL_BEGIN
 {
   // figure out how many shapes to draw
   NSMutableArray *shapeHeightDelta = [[NSMutableArray alloc] init];
-  
-  if (self.count == 0) // draw in the middle - VIOLATION of MVC - Why should view know model is zero based
+  if (self.chosen) {
+    // draw selection
+    UIBezierPath *roundedRect = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:3];
+    
+    [[UIColor yellowColor] setFill];
+    [roundedRect fill];
+  }
+
+
+  if (self.count == 1) // draw in the middle - VIOLATION of MVC - Why should view know model is zero based
     [shapeHeightDelta addObject:[NSNumber numberWithFloat:0.0f]];
   
-  if (self.count == 1) { // draw on either end of the center
+  if (self.count == 2) { // draw on either end of the center
     [shapeHeightDelta addObject:[NSNumber numberWithFloat:-[self halfShapeHeight]*SYMBOL_GAP]];
     [shapeHeightDelta addObject:[NSNumber numberWithFloat:+[self halfShapeHeight]*SYMBOL_GAP]];
   }
   
-  if (self.count == 2) { // draw on either side of the center plus the center
+  if (self.count == 3) { // draw on either side of the center plus the center
     [shapeHeightDelta addObject:[NSNumber numberWithFloat:-[self shapeHeight]*SYMBOL_GAP]];
     [shapeHeightDelta addObject:[NSNumber numberWithFloat:0.0f]];
     [shapeHeightDelta addObject:[NSNumber numberWithFloat:+[self shapeHeight]*SYMBOL_GAP]];
@@ -73,7 +81,8 @@ NS_ASSUME_NONNULL_BEGIN
     if (self.shape == SetCardShapeSquiggle) [self drawSquiggleAtPoint:centerPoint];
     if (self.shape == SetCardShapeOval) [self drawOvalAtPoint:centerPoint];
   }
-}
+  
+ }
 
 - (void)drawDiamondAtPoint:(CGPoint)centerPoint
 {
