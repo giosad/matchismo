@@ -25,17 +25,20 @@ NS_ASSUME_NONNULL_BEGIN
   return self;
 }
 
--(NSMutableAttributedString* ) cornerText
-{
-  NSMutableAttributedString *title = [[NSMutableAttributedString alloc] init];
-  
-  //"♣︎", @"♠︎", @"♦︎", @"♥︎"
 
+- (NSMutableAttributedString *)suitAttrString
+{
   UIColor *suitColor = [@[ @"♦︎", @"♥︎"] containsObject:self.suit] ? [UIColor redColor] : [UIColor blackColor];
   NSMutableAttributedString *suitStr = [[NSMutableAttributedString alloc]
                                         initWithString:self.suit
                                         attributes: @{NSForegroundColorAttributeName: suitColor}];
-
+  return suitStr;
+}
+-(NSMutableAttributedString *)cornerText
+{
+  NSMutableAttributedString *title = [[NSMutableAttributedString alloc] init];
+  
+  //"♣︎", @"♠︎", @"♦︎", @"♥︎"
   
   NSMutableAttributedString *rankStr = [[NSMutableAttributedString alloc]
                                         initWithString:[self rankAsString]
@@ -43,7 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
   
   [title appendAttributedString: rankStr];
   [title appendAttributedString: [[NSMutableAttributedString alloc] initWithString:@"\n"]];
-  [title appendAttributedString: suitStr];
+  [title appendAttributedString: [self suitAttrString]];
 
   
   NSMutableParagraphStyle *paragraphStyle = [[NSMutableParagraphStyle alloc] init];
@@ -162,7 +165,9 @@ NS_ASSUME_NONNULL_BEGIN
   if (upsideDown) [self pushContextAndRotateUpsideDown];
   CGPoint middle = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
   UIFont *pipFont = [UIFont systemFontOfSize:self.bounds.size.width * PIP_FONT_SCALE_FACTOR];
-  NSAttributedString *attributedSuit = [[NSAttributedString alloc] initWithString:self.suit attributes:@{ NSFontAttributeName : pipFont }];
+  NSMutableAttributedString *attributedSuit = [self suitAttrString];
+  
+  [attributedSuit addAttribute:NSFontAttributeName value:pipFont range:NSMakeRange(0, [attributedSuit length])];
   CGSize pipSize = [attributedSuit size];
   CGPoint pipOrigin = CGPointMake(
                                   middle.x-pipSize.width/2.0-hoffset*self.bounds.size.width,

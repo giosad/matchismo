@@ -2,26 +2,42 @@
 // Created by Gennadi Iosad.
 
 #import "CardGameTableViewController.h"
-
+#import "ViewAnimationQueue.h"
 #import "Grid.h"
 NS_ASSUME_NONNULL_BEGIN
 @interface CardGameTableViewController()
 @property (strong, nonatomic) NSMutableArray<CardView*> *cardViewsInternal;
 @property (strong, nonatomic) Grid *grid;
-
+@property (strong, nonatomic) ViewAnimationQueue *viewAnimationQueue;
 
 @end
 @implementation CardGameTableViewController
-- (void) selectCardView:(CardView*)cardView
+- (void) updateCardView:(CardView*)cardView choosen:(BOOL)chosen;
 {
-    NSLog(@"selectCardView");
-  [UIView transitionWithView:cardView
+//  NSLog(@"updateCardView");
+  if (chosen != cardView.choosen) {
+    
+//    
+//    [UIView animateWithDuration:1.5
+//                          delay:0.0
+//                        options: UIViewAnimationOptionTransitionFlipFromLeft
+//                     animations:^{
+//                       cardView.alpha = 0;
+//                     }
+//                     completion:nil];
+    
+
+//    cardView.choosen = !cardView.choosen;
+//UIViewAnimationOptionTransitionCrossDissolve
+  [self.viewAnimationQueue transitionWithView:cardView
                     duration:0.5
                      options:UIViewAnimationOptionTransitionFlipFromLeft
                   animations:^{
                     cardView.choosen = !cardView.choosen;
-                  }
+
+                                      }
                   completion:NULL];
+  }
   
 }
 - (Grid*) grid
@@ -31,10 +47,19 @@ NS_ASSUME_NONNULL_BEGIN
   }
   return _grid;
 }
+
+- (ViewAnimationQueue*) viewAnimationQueue
+{
+  if (!_viewAnimationQueue) {
+    _viewAnimationQueue = [[ViewAnimationQueue alloc] init];
+  }
+  return _viewAnimationQueue;
+}
+
 - (void) addCardView:(CardView*)cardView
 {
   [self.cardViewsInternal addObject:cardView];
-  CGRect fr = CGRectMake(-100, -100, 0, 0);
+  CGRect fr = CGRectMake(-100, -100, 30, 100);
   cardView.frame = fr;
   
   [self.view addSubview:cardView];
@@ -55,17 +80,52 @@ NS_ASSUME_NONNULL_BEGIN
     return;
   }
 
-  CardView* lastView = [self.cardViewsInternal lastObject];
+  CardView *lastView = [self.cardViewsInternal lastObject];
   if (lastView != cardView) {
     self.cardViewsInternal[i] = [self.cardViewsInternal lastObject];
-    [self.cardViewsInternal removeLastObject];
   }
-  //todo animation
-  [UIView animateWithDuration:2.0 animations:^{
-    cardView.frame = CGRectMake(-100, -100, 0, 0);
-    
-  }];
-  [cardView removeFromSuperview];
+  [self.cardViewsInternal removeLastObject];
+  [self.viewAnimationQueue animateWithDuration:0.1
+                        delay:0.0
+                      options:UIViewAnimationOptionCurveEaseIn
+                   animations:^{
+//                     [cardView setNeedsDisplay];
+                     cardView.frame = CGRectMake(-100, -100, 0, 0);
+                     
+                   }
+                   completion:^(BOOL finished) {
+                     [cardView removeFromSuperview];
+                     int pos = 0;
+                     if ([self closeCardGapsWhenRemoved] ) {
+                       for (CardView *cardView in self.cardViewsInternal) {
+                         [self positionCardView:cardView atPosition:pos++];
+                       }
+                     }
+
+                   }];
+
+}
+
+- (void) removeAllCardViews
+{
+  [self.viewAnimationQueue animateWithDuration:0.1
+                                         delay:0.0
+                                       options:UIViewAnimationOptionCurveEaseIn
+                                    animations:^{
+                                      for (CardView *cardView in self.cardViews) {
+                                        cardView.frame = CGRectMake(-100, -100, 0, 0);
+                                      }
+                                    }
+                                    completion:^(BOOL finished) {                                      
+                                      for (CardView *cardView in self.cardViews) {
+                                        [cardView removeFromSuperview];
+                                        
+                                        [self.cardViewsInternal removeObject:cardView];
+                                      }
+                                      
+                                    }];
+  
+
 }
 - (NSArray<CardView*> *)cardViews
 {
@@ -94,12 +154,12 @@ NS_ASSUME_NONNULL_BEGIN
     NSUInteger col = position % self.grid.columnCount;
     //    cardView.frame = [self.grid frameOfCellAtRow:row inColumn:col];
     
-    [UIView animateWithDuration:2.0 animations:^{
-      
-      cardView.frame = [self.grid frameOfCellAtRow:row inColumn:col];
+    [self.viewAnimationQueue animateWithDuration:(0.0 + 0.2f) animations:^{
 
+      cardView.frame = [self.grid frameOfCellAtRow:row inColumn:col];
+      [cardView setNeedsDisplay];
     }];
-  NSLog(@"cardView newPos %0.1f, %0.1f", cardView.frame.origin.x, cardView.frame.origin.y);
+//  NSLog(@"cardView newPos %0.1f, %0.1f", cardView.frame.origin.x, cardView.frame.origin.y);
   
     // [cardView setNeedsDisplay];
 }
@@ -109,7 +169,7 @@ NS_ASSUME_NONNULL_BEGIN
   NSLog(@"CardGameTableViewController::alignCardsToViewSize newSize %.1fx%.1f ", newSize.height, newSize.width);
   if (CGSizeEqualToSize(self.grid.size, newSize)) {
       NSLog(@"CardGameTableViewController::alignCardsToViewSize nothing to do");
-    return; //nothing to do
+      return; //nothing to do
   }
 	 // self.grid = nil;
   self.grid.cellAspectRatio = 0.7;
@@ -128,7 +188,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
   [super viewDidLayoutSubviews];
   [self alignCardsToViewSize:self.view.bounds.size];
-  NSLog(@"CardGameTableViewController::viewDidLayoutSubviews");
+  NSLog(@"CardGameTableViewController::viewDidLayoutSubviews %p", self);
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection * _Nullable)previousTraitCollection
@@ -141,10 +201,21 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-    NSLog(@"CardGameTableViewController::viewWillTransitionToSize");
+  NSLog(@"CardGameTableViewController::viewWillTransitionToSize size.w %0.1f size.h %0.1f", size.width, size.height);
+  [coordinator animateAlongsideTransition:nil completion:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+    NSLog(@"CardGameTableViewController::viewWillTransitionToSize animateAlongsideTransition completed");
+  }];
 //  [self alignCardsToViewSize:size];
 }
 
+-(void) viewDidLoad
+{
+  [super viewDidLoad];
+  self.view.clipsToBounds = NO;
+  NSLog(@"CardGameTableViewController::viewDidLoad ");
+  //  [self alignCardsToViewSize:self.view.bounds.size];
+  
+}
 -(void) viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];

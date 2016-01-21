@@ -35,4 +35,9 @@
 //  [self startNewGame];
 //}
 
+-(BOOL) closeCardGapsWhenRemoved
+{
+  return YES;
+}
+
 @end

@@ -5,9 +5,9 @@
 NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, SetCardShape) {
-  SetCardShapeCircle,
-  SetCardShapeRectangle,
-  SetCardShapeTriangle,
+  SetCardShapeDiamond,
+  SetCardShapeSquiggle,
+  SetCardShapeOval,
   SetCardShapeCount
 };
 
@@ -21,7 +21,7 @@ typedef NS_ENUM(NSUInteger, SetCardShading) {
 typedef NS_ENUM(NSUInteger, SetCardColor) {
   SetCardColorRed,
   SetCardColorGreen,
-  SetCardColorBlue,
+  SetCardColorPurple,
   SetCardColorCount
 };
 

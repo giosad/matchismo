@@ -11,8 +11,11 @@ typedef void (^CardTapEventHandlerType)(CardView*);
 @property (strong, nonatomic) CardTapEventHandlerType cardTapEventHandler;
 
 - (void) addCardView:(CardView*)cardView;
+- (void) removeAllCardViews;
 - (void) removeCardView:(CardView*)cardView;
-- (void) selectCardView:(CardView*)cardView;
+- (void) updateCardView:(CardView*)cardView choosen:(BOOL)isChoosen;
+
+-(BOOL) closeCardGapsWhenRemoved;
 
 @end
 

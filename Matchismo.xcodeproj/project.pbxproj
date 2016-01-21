@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3061659D1C4FA73800A27AD9 /* ViewAnimationQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 3061659C1C4FA73800A27AD9 /* ViewAnimationQueue.m */; };
 		307658391C42C40F00E83423 /* Card.m in Sources */ = {isa = PBXBuildFile; fileRef = 307658381C42C40F00E83423 /* Card.m */; };
 		3076583C1C438F8E00E83423 /* MatchCardGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3076583B1C438F8E00E83423 /* MatchCardGameViewController.m */; };
 		3076583F1C43909800E83423 /* SetCardGameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3076583E1C43909800E83423 /* SetCardGameViewController.m */; };
@@ -32,6 +33,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3061659B1C4FA73800A27AD9 /* ViewAnimationQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewAnimationQueue.h; sourceTree = "<group>"; };
+		3061659C1C4FA73800A27AD9 /* ViewAnimationQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewAnimationQueue.m; sourceTree = "<group>"; };
 		307658371C42C40F00E83423 /* Card.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Card.h; sourceTree = "<group>"; };
 		307658381C42C40F00E83423 /* Card.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Card.m; sourceTree = "<group>"; };
 		3076583A1C438F8E00E83423 /* MatchCardGameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MatchCardGameViewController.h; sourceTree = "<group>"; };
@@ -99,6 +102,8 @@
 				30A046D01C3AB52400786AF7 /* CardGameViewController.m */,
 				307658671C4D1F8400E83423 /* CardGameTableViewController.h */,
 				307658681C4D1F8400E83423 /* CardGameTableViewController.m */,
+				3061659B1C4FA73800A27AD9 /* ViewAnimationQueue.h */,
+				3061659C1C4FA73800A27AD9 /* ViewAnimationQueue.m */,
 			);
 			name = VC;
 			path = Matchismo/VC;
@@ -296,6 +301,7 @@
 				307658501C47D58C00E83423 /* CardView.m in Sources */,
 				307658601C4B893200E83423 /* PlayingCardView.m in Sources */,
 				3076584D1C47CB3F00E83423 /* Grid.m in Sources */,
+				3061659D1C4FA73800A27AD9 /* ViewAnimationQueue.m in Sources */,
 				30B1BDB31C3D6C820005027B /* CardMatchingGameEvent.m in Sources */,
 				3076583C1C438F8E00E83423 /* MatchCardGameViewController.m in Sources */,
 				30A046E91C3C057200786AF7 /* Deck.m in Sources */,

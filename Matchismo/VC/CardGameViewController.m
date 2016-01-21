@@ -19,7 +19,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *gameModeLabel;
-@property (weak, nonatomic) IBOutlet UILabel *gameEventInfoLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeControl;
 @property (weak, nonatomic) CardGameTableViewController *gameTableController;
 @end
@@ -58,6 +57,9 @@
   
   self.game = nil;  //will reset the game state
   self.gameHistory = nil; //will reset the history log
+  
+  [self.gameTableController removeAllCardViews];
+  
   [self dealCards:10];
   [self updateUI];
 
@@ -79,28 +81,39 @@
   
 }
 
+
+
+-(BOOL) closeCardGapsWhenRemoved
+{
+  return NO;
+}
+
 -(void)updateUI
 {
   for (CardView *cardView in self.gameTableController.cardViews) {
     
     Card *card = [self.game cardWithId:cardView.cardId];
-    if (card.isChosen) {
-      [self.gameTableController selectCardView:cardView];
-    }
-
+    [self.gameTableController updateCardView:cardView choosen:card.chosen];
+  }
+  
+  for (CardView *cardView in self.gameTableController.cardViews) {
+    
+    Card *card = [self.game cardWithId:cardView.cardId];
+ 
     if (card.isMatched) {
       [self.gameTableController removeCardView:cardView];
     }
   }
   
   self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", (int)self.game.score];
-  self.gameEventInfoLabel.attributedText = [self textInfoFromGameEvent:self.game.lastEvent];
-  
-  if (self.game.lastEvent.score != 0) {
-    [self.gameHistory appendAttributedString:self.gameEventInfoLabel.attributedText];
-    [self.gameHistory appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
-  }
-  
+  //todo fix
+//  self.gameEventInfoLabel.attributedText = [self textInfoFromGameEvent:self.game.lastEvent];
+//  
+//  if (self.game.lastEvent.score != 0) {
+//    [self.gameHistory appendAttributedString:self.gameEventInfoLabel.attributedText];
+//    [self.gameHistory appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+//  }
+//  
   
 }
 
@@ -123,8 +136,10 @@
 -(void) setupGameTable
 {
   self.gameTableController.cardTapEventHandler = ^(CardView* cardView) {
-    [self.game chooseCardWithId:cardView.cardId];
-    [self updateUI];
+    if (cardView.cardId) {
+      [self.game chooseCardWithId:cardView.cardId];
+      [self updateUI];
+    }
     self.gameModeControl.enabled = NO;
   };
 
