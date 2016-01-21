@@ -10,7 +10,7 @@ typedef void (^CardTapEventHandlerType)(CardView*);
 @property (nonatomic, readonly) NSArray<CardView*> *cardViews;
 @property (strong, nonatomic) CardTapEventHandlerType cardTapEventHandler;
 @property (nonatomic)BOOL closeGapsWhenCardsRemoved;
-
+@property (nonatomic) UIViewAnimationOptions cardChooseAnimation;
 - (void) addCardView:(CardView*)cardView;
 - (void) removeAllCardViews;
 - (void) removeCardView:(CardView*)cardView;

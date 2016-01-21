@@ -27,6 +27,8 @@
 {
   [super setupGameTable];
   self.gameTableController.closeGapsWhenCardsRemoved = NO;
+  self.gameTableController.cardChooseAnimation = UIViewAnimationOptionTransitionFlipFromLeft;
+
 }
 
 

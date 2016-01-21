@@ -18,10 +18,9 @@ NS_ASSUME_NONNULL_BEGIN
 //  NSLog(@"updateCardView");
   if (chosen != cardView.choosen) {
     
-  //UIViewAnimationOptionTransitionCrossDissolve
   [self.viewAnimationQueue transitionWithView:cardView
                     duration:0.5
-                     options:UIViewAnimationOptionTransitionFlipFromLeft
+                     options:self.cardChooseAnimation
                   animations:^{
                     cardView.choosen = !cardView.choosen;
                   }
@@ -140,20 +139,26 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) positionCardView:(CardView *)cardView atPosition:(NSUInteger)position
 {
-
-    NSUInteger row = position / self.grid.columnCount;
-    NSUInteger col = position % self.grid.columnCount;
-    [self.viewAnimationQueue animateWithDuration:(0.0 + 0.2f) animations:^{
-      cardView.frame = [self.grid frameOfCellAtRow:row inColumn:col];
-    }];
-
-}
+  NSUInteger row = position / self.grid.columnCount;
+  NSUInteger col = position % self.grid.columnCount;
+  [self.viewAnimationQueue animateWithDuration:0.2f
+                                         delay:0.0
+                                       options:UIViewAnimationOptionCurveEaseInOut
+                                    animations:^{
+                                      cardView.frame = [self.grid frameOfCellAtRow:row inColumn:col];
+                                    }
+                                    completion:^(BOOL finished) {
+                                      //redraw card, since its image may be garbled due to card size changes
+                                      [cardView setNeedsDisplay];
+                                    }
+   ];
+ }
 
 - (void) alignCardsToViewSize:(CGSize)newSize
 {
   NSLog(@"CardGameTableViewController::alignCardsToViewSize newSize %.1fx%.1f ", newSize.height, newSize.width);
   if (CGSizeEqualToSize(self.grid.size, newSize)) {
-      NSLog(@"CardGameTableViewController::alignCardsToViewSize nothing to do");
+      NSLog(@"CardGameTableViewController::alignCardsToViewSize - same size, nothing to do");
       return; //nothing to do
   }
   NSLog(@"CardGameTableViewController::alignCardsToViewSize realigning cards...");
