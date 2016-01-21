@@ -30,39 +30,44 @@ typedef void (^anim_block)(void) ;
     return;
   }
   
-  anim_block ab = [self.animationQueue firstObject];
+  anim_block nextBlockToRun = [self.animationQueue firstObject];
   [self.animationQueue removeObjectAtIndex:0];
   self.animationInProgress = YES;
 //  NSLog(@"tryRunNextAnimation qCount %d", (int)[self.animationQueue count]);
-  ab();
-  //[self performSelector:@selector(tryRunNextAnimation) withObject:nil afterDelay:0];
+  nextBlockToRun();
+
   
 }
+
+
 -(void)animateWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^ __nullable)(BOOL finished))completion
 {
 //  NSLog(@"animateWithDuration qCount %d", (int)[self.animationQueue count]);
 
   __weak ViewAnimationQueue* blockSelf = self;
   [self.animationQueue addObject: ^() {
-      NSLog(@"animateWithDuration anim block RUNS");
+//    NSLog(@"animateWithDuration anim block RUNS");
     [UIView animateWithDuration:duration delay:delay options:options animations:animations completion:^(BOOL finished) {
       if (completion) completion(finished);
       blockSelf.animationInProgress = NO;
-     [blockSelf tryRunNextAnimation];
-//       [blockSelf performSelector:@selector(tryRunNextAnimation) withObject:nil afterDelay:0];
-    }];}];
-     
-
+      [blockSelf tryRunNextAnimation];
+    }];
+  }];
+  
     [self tryRunNextAnimation];
   
 }
 
+
 -(void)animateWithDuration:(NSTimeInterval)duration animations:(void (^)(void))animations
 {
-  [self animateWithDuration:duration delay:0 options:UIViewAnimationOptionCurveLinear animations:animations completion:NULL];
-  
-  
+  [self animateWithDuration:duration
+                      delay:0 options:UIViewAnimationOptionCurveEaseInOut || UIViewAnimationOptionTransitionNone
+                 animations:animations
+                 completion:NULL];
 }
+
+
 - (void)transitionWithView:(UIView *)view duration:(NSTimeInterval)duration options:(UIViewAnimationOptions)options animations:(void (^ __nullable)(void))animations completion:(void (^ __nullable)(BOOL finished))completion
 {
   __weak ViewAnimationQueue* blockSelf = self;
@@ -75,7 +80,6 @@ typedef void (^anim_block)(void) ;
   
   
   [self tryRunNextAnimation];
-
 }
 @end
 

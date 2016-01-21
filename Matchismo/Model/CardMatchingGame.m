@@ -73,6 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
   return chosenCards;
 }
 
+
 -(void)checkMatchesToCard:(Card *)card
 {
   int cardsToCheckNum = (int)self.matchNumRule - 1; //minus the card we clicked on now
@@ -108,15 +109,16 @@ static const int COST_TO_CHOOSE = 1;
 -(void)chooseCardWithId:(id)cardId
 {
   Card *card = [self cardWithId:cardId];
-  if (!card.isMatched) {
-    if (card.isChosen) {
-      card.chosen = NO;
-    } else {
-      [self checkMatchesToCard:card];
-      self.score -= COST_TO_CHOOSE;
-      card.chosen = YES;
-    }
+  if (card.isMatched) {
+    return;
   }
+  
+  if (!card.chosen) {
+    [self checkMatchesToCard:card];
+    self.score -= COST_TO_CHOOSE;
+  }
+  
+  card.chosen = !card.isChosen;
 }
 
 -(Card*) cardWithId:(id)cardId

@@ -73,6 +73,7 @@ NS_ASSUME_NONNULL_BEGIN
   if (lastView != cardView) {
     self.cardViewsInternal[i] = [self.cardViewsInternal lastObject];
   }
+  
   [self.cardViewsInternal removeLastObject];
   [self.viewAnimationQueue animateWithDuration:0.5
                         delay:0.0
@@ -88,10 +89,9 @@ NS_ASSUME_NONNULL_BEGIN
                          [self positionCardView:cardView atPosition:pos++];
                        }
                      }
-
                    }];
-
 }
+
 
 - (void) removeAllCardViews
 {
@@ -149,9 +149,8 @@ NS_ASSUME_NONNULL_BEGIN
                                     }
                                     completion:^(BOOL finished) {
                                       //redraw card, since its image may be garbled due to card size changes
-                                      [cardView setNeedsDisplay];
-                                    }
-   ];
+                                      [cardView setNeedsDisplay]; //Todo(gena) consider moving to animateWithDuration implementation
+                                    }];
  }
 
 - (void) alignCardsToViewSize:(CGSize)newSize

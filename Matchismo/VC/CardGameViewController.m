@@ -87,16 +87,28 @@
 
 -(void)updateUI
 {
+  
+  //first - flip cards to faces
   for (CardView *cardView in self.gameTableController.cardViews) {
-    
     Card *card = [self.game cardWithId:cardView.cardId];
-    [self.gameTableController updateCardView:cardView choosen:card.chosen];
+    if (card.chosen) {
+      [self.gameTableController updateCardView:cardView choosen:card.chosen];
+    }
   }
   
+  
+  //second - flip cards to card's back
   for (CardView *cardView in self.gameTableController.cardViews) {
-    
     Card *card = [self.game cardWithId:cardView.cardId];
- 
+    if (!card.chosen) {
+      [self.gameTableController updateCardView:cardView choosen:card.chosen];
+    }
+  }
+  
+  
+  //third - remove matched cards
+  for (CardView *cardView in self.gameTableController.cardViews) {
+    Card *card = [self.game cardWithId:cardView.cardId];
     if (card.isMatched) {
       [self.gameTableController removeCardView:cardView];
     }
