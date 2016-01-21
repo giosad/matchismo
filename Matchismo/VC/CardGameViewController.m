@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UILabel *gameModeLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeControl;
-@property (weak, nonatomic) CardGameTableViewController *gameTableController;
+
 @end
 
 @implementation CardGameViewController
@@ -81,12 +81,6 @@
   
 }
 
-
-
--(BOOL) closeCardGapsWhenRemoved
-{
-  return NO;
-}
 
 -(void)updateUI
 {

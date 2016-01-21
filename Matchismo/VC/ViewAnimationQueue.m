@@ -33,14 +33,14 @@ typedef void (^anim_block)(void) ;
   anim_block ab = [self.animationQueue firstObject];
   [self.animationQueue removeObjectAtIndex:0];
   self.animationInProgress = YES;
-  NSLog(@"tryRunNextAnimation qCount %d", (int)[self.animationQueue count]);
+//  NSLog(@"tryRunNextAnimation qCount %d", (int)[self.animationQueue count]);
   ab();
   //[self performSelector:@selector(tryRunNextAnimation) withObject:nil afterDelay:0];
   
 }
 -(void)animateWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay options:(UIViewAnimationOptions)options animations:(void (^)(void))animations completion:(void (^ __nullable)(BOOL finished))completion
 {
-  NSLog(@"animateWithDuration qCount %d", (int)[self.animationQueue count]);
+//  NSLog(@"animateWithDuration qCount %d", (int)[self.animationQueue count]);
 
   __weak ViewAnimationQueue* blockSelf = self;
   [self.animationQueue addObject: ^() {

@@ -34,10 +34,10 @@
 //  [super viewDidLoad];
 //  [self startNewGame];
 //}
-
--(BOOL) closeCardGapsWhenRemoved
+- (void)setupGameTable
 {
-  return YES;
+  [super setupGameTable];
+  self.gameTableController.closeGapsWhenCardsRemoved = YES;
 }
 
 @end

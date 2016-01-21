@@ -9,13 +9,13 @@ typedef void (^CardTapEventHandlerType)(CardView*);
 @interface CardGameTableViewController : UIViewController
 @property (nonatomic, readonly) NSArray<CardView*> *cardViews;
 @property (strong, nonatomic) CardTapEventHandlerType cardTapEventHandler;
+@property (nonatomic)BOOL closeGapsWhenCardsRemoved;
 
 - (void) addCardView:(CardView*)cardView;
 - (void) removeAllCardViews;
 - (void) removeCardView:(CardView*)cardView;
 - (void) updateCardView:(CardView*)cardView choosen:(BOOL)isChoosen;
 
--(BOOL) closeCardGapsWhenRemoved;
 
 @end
 

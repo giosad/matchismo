@@ -23,4 +23,11 @@
   return [[PlayingCardView alloc] initWithSuit:playingCard.suit Rank:playingCard.rank];
 }
 
+- (void)setupGameTable
+{
+  [super setupGameTable];
+  self.gameTableController.closeGapsWhenCardsRemoved = NO;
+}
+
+
 @end
