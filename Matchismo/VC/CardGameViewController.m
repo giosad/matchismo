@@ -52,6 +52,9 @@
   [self startNewGame];
 }
 
+- (IBAction)dealMoreCards:(UIButton *)sender {
+    [self dealCards:3];
+}
 
 -(void) startNewGame {
   
@@ -60,8 +63,8 @@
   
   [self.gameTableController removeAllCardViews];
   
-  [self dealCards:10];
-  [self updateUI];
+  [self dealCards:12];
+//  [self updateUI];
 
   self.gameModeControl.enabled = YES;
   [self touchGameModeControl:nil]; //reset matchNumRule

@@ -197,6 +197,9 @@
                                 <state key="normal" title="Deal">
                                     <color key="titleShadowColor" red="0.058823529409999999" green="0.43137254899999999" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
+                                <connections>
+                                    <action selector="dealMoreCards:" destination="MCi-gb-eFH" eventType="touchUpInside" id="1Im-jO-1fo"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -299,7 +302,7 @@
                         <viewControllerLayoutGuide type="bottom" id="hN3-LN-qTK"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="naR-JC-6gi">
-                        <rect key="frame" x="0.0" y="0.0" width="570" height="401"/>
+                        <rect key="frame" x="0.0" y="0.0" width="578" height="403"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" red="0.0" green="0.50196081400000003" blue="0.25098040700000002" alpha="1" colorSpace="calibratedRGB"/>
                         <gestureRecognizers/>
@@ -314,7 +317,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="f3T-x8-iD9"/>
-        <segue reference="h2X-gD-Jg4"/>
+        <segue reference="nGN-nl-sGE"/>
+        <segue reference="AL1-yC-c7o"/>
     </inferredMetricsTieBreakers>
 </document>
