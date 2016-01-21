@@ -9,37 +9,27 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableArray<CardView*> *cardViewsInternal;
 @property (strong, nonatomic) Grid *grid;
 @property (strong, nonatomic) ViewAnimationQueue *viewAnimationQueue;
-
 @end
 @implementation CardGameTableViewController
+
+
 - (void) updateCardView:(CardView*)cardView choosen:(BOOL)chosen;
 {
 //  NSLog(@"updateCardView");
   if (chosen != cardView.choosen) {
     
-//    
-//    [UIView animateWithDuration:1.5
-//                          delay:0.0
-//                        options: UIViewAnimationOptionTransitionFlipFromLeft
-//                     animations:^{
-//                       cardView.alpha = 0;
-//                     }
-//                     completion:nil];
-    
-
-//    cardView.choosen = !cardView.choosen;
-//UIViewAnimationOptionTransitionCrossDissolve
+  //UIViewAnimationOptionTransitionCrossDissolve
   [self.viewAnimationQueue transitionWithView:cardView
                     duration:0.5
                      options:UIViewAnimationOptionTransitionFlipFromLeft
                   animations:^{
                     cardView.choosen = !cardView.choosen;
-
-                                      }
+                  }
                   completion:NULL];
   }
-  
 }
+
+
 - (Grid*) grid
 {
   if (!_grid) {
@@ -47,6 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
   }
   return _grid;
 }
+
 
 - (ViewAnimationQueue*) viewAnimationQueue
 {
@@ -56,21 +47,20 @@ NS_ASSUME_NONNULL_BEGIN
   return _viewAnimationQueue;
 }
 
+
 - (void) addCardView:(CardView*)cardView
 {
   [self.cardViewsInternal addObject:cardView];
-  CGRect fr = CGRectMake(-100, -100, 100, 100);
+  CGRect fr = CGRectMake(-300, -300, self.grid.cellSize.width*2, self.grid.cellSize.height*2);
   cardView.frame = fr;
   
   [self.view addSubview:cardView];
   UITapGestureRecognizer *singleFingerTap =
   [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleCardTap:)];
   [cardView addGestureRecognizer:singleFingerTap];
-//  [cardView setNeedsDisplay];
-  //[self alignCardsToViewSize:self.view.bounds.size];
   [self positionCardView:cardView atPosition:[self.cardViewsInternal count] - 1];
-  //todo animation
 }
+
 
 - (void) removeCardView:(CardView*)cardView
 {
@@ -121,13 +111,15 @@ NS_ASSUME_NONNULL_BEGIN
                                         [cardView removeFromSuperview];
                                       }
                                     }];
-  
-
 }
+
+
 - (NSArray<CardView*> *)cardViews
 {
   return [self.cardViewsInternal copy];
 }
+
+
 - (NSMutableArray<CardView*> *)cardViewsInternal
 {
   if (!_cardViewsInternal) {
@@ -135,6 +127,7 @@ NS_ASSUME_NONNULL_BEGIN
   }
   return _cardViewsInternal;
 }
+
 
 - (void)handleCardTap:(UITapGestureRecognizer *)sender
 {
@@ -144,21 +137,16 @@ NS_ASSUME_NONNULL_BEGIN
   }
 }
 
+
 - (void) positionCardView:(CardView *)cardView atPosition:(NSUInteger)position
 {
 
     NSUInteger row = position / self.grid.columnCount;
     NSUInteger col = position % self.grid.columnCount;
-    //    cardView.frame = [self.grid frameOfCellAtRow:row inColumn:col];
-    
     [self.viewAnimationQueue animateWithDuration:(0.0 + 0.2f) animations:^{
-
       cardView.frame = [self.grid frameOfCellAtRow:row inColumn:col];
-//      [cardView setNeedsDisplay];
     }];
-//  NSLog(@"cardView newPos %0.1f, %0.1f", cardView.frame.origin.x, cardView.frame.origin.y);
-  
-    // [cardView setNeedsDisplay];
+
 }
 
 - (void) alignCardsToViewSize:(CGSize)newSize
@@ -186,8 +174,9 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) viewDidLayoutSubviews
 {
   [super viewDidLayoutSubviews];
-  [self alignCardsToViewSize:self.view.bounds.size];
   NSLog(@"CardGameTableViewController::viewDidLayoutSubviews %p", self);
+  [self alignCardsToViewSize:self.view.bounds.size];
+
 }
 
 - (void)traitCollectionDidChange:(UITraitCollection * _Nullable)previousTraitCollection
