@@ -40,7 +40,7 @@ NS_ASSUME_NONNULL_BEGIN
 #pragma mark -
 -(void)  setMatchNumRule:(NSUInteger)v
 {
-  NSLog(@"setMatchNumRule %d", v);
+  NSLog(@"setMatchNumRule %d", (int)v);
   _matchNumRule = v;
 }
 

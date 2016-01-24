@@ -162,10 +162,10 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 
-- (void) alignCardsToViewSize:(CGSize)newSize
+- (void) alignCardsToViewSize:(CGSize)newSize forced:(BOOL)forced
 {
   NSLog(@"CardGameTableViewController::alignCardsToViewSize newSize %.1fx%.1f ", newSize.height, newSize.width);
-  if (CGSizeEqualToSize(self.grid.size, newSize)) {
+  if (CGSizeEqualToSize(self.grid.size, newSize) && !forced) {
     NSLog(@"CardGameTableViewController::alignCardsToViewSize - same size, nothing to do");
     return; //nothing to do
   }
@@ -209,7 +209,7 @@ NS_ASSUME_NONNULL_BEGIN
   {
     NSLog(@"pinch scale %f", sender.scale);
     if (sender.scale > 1) {
-      self.grid = nil;
+
       self.stacked = YES;
       NSArray<CardView*> *cardViews = [self.cardViewsInternal copy];
       [self.viewAnimationQueue animateWithDuration:0.6
@@ -226,7 +226,7 @@ NS_ASSUME_NONNULL_BEGIN
                                         completion:^(BOOL finished) {
                                         }];
     } else {
-      [self alignCardsToViewSize:self.view.bounds.size];
+      [self alignCardsToViewSize:self.view.bounds.size forced:YES];
       self.stacked = NO;
     }
   }
@@ -250,7 +250,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
   [super viewDidLayoutSubviews];
   NSLog(@"CardGameTableViewController::viewDidLayoutSubviews %p", self);
-  [self alignCardsToViewSize:self.view.bounds.size];
+  [self alignCardsToViewSize:self.view.bounds.size forced:NO];
   
 }
 
