@@ -66,6 +66,7 @@
   [self dealCards:12];
 
   self.gameModeControl.enabled = YES;
+  self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", (int)self.game.score];
 }
 
 
