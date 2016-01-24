@@ -39,7 +39,7 @@
   [super setupGameTable];
   self.gameTableController.closeGapsWhenCardsRemoved = YES;
   self.gameTableController.cardChooseAnimation = UIViewAnimationOptionTransitionCrossDissolve;
-
+  self.gameTableController.cardChooseAnimationTime = 0.1;
 }
 
 

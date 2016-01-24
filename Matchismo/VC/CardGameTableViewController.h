@@ -18,6 +18,9 @@ typedef void (^CardTapEventHandlerType)(CardView*);
 //protected//
 @property (nonatomic) UIViewAnimationOptions cardChooseAnimation;
 
+//protected//
+@property (nonatomic) CGFloat cardChooseAnimationTime;
+
 - (void) addCardView:(CardView*)cardView;
 - (void) removeAllCardViews;
 - (void) removeCardView:(CardView*)cardView;

@@ -17,7 +17,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
   //  NSLog(@"updateCardView");
   [self.viewAnimationQueue transitionWithView:cardView
-                                     duration:0.5
+                                     duration:self.cardChooseAnimationTime
                                       options:self.cardChooseAnimation
                           animationConditions:^BOOL{
                             return chosen != cardView.chosen;

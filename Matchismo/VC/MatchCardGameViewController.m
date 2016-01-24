@@ -28,7 +28,7 @@
   [super setupGameTable];
   self.gameTableController.closeGapsWhenCardsRemoved = NO;
   self.gameTableController.cardChooseAnimation = UIViewAnimationOptionTransitionFlipFromLeft;
-  
+  self.gameTableController.cardChooseAnimationTime = 0.6;
   self.game.matchNumRule = 2; //default
 
 }
