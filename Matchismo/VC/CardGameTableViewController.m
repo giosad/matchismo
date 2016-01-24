@@ -9,26 +9,19 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) NSMutableArray<CardView*> *cardViewsInternal;
 @property (strong, nonatomic) Grid *grid;
 @property (strong, nonatomic) ViewAnimationQueue *viewAnimationQueue;
+@property (strong, nonatomic) UIDynamicAnimator* animator;
 @end
 @implementation CardGameTableViewController
 
 
-- (void) updateCardView:(CardView*)cardView chosen:(BOOL)chosen;
+#pragma mark - Lazy initializers
+-(UIDynamicAnimator *)animator
 {
-  //  NSLog(@"updateCardView");
-  [self.viewAnimationQueue transitionWithView:cardView
-                                     duration:self.cardChooseAnimationTime
-                                      options:self.cardChooseAnimation
-                          animationConditions:^BOOL{
-                            return chosen != cardView.chosen;
-                          }
-                                   animations:^{
-                                     cardView.chosen = !cardView.chosen;
-                                   }
-                                   completion:NULL];
-  
+  if (!_animator) {
+    _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+  }
+  return _animator;
 }
-
 
 - (Grid*) grid
 {
@@ -46,6 +39,35 @@ NS_ASSUME_NONNULL_BEGIN
   }
   return _viewAnimationQueue;
 }
+
+
+- (NSMutableArray<CardView*> *)cardViewsInternal
+{
+  if (!_cardViewsInternal) {
+    _cardViewsInternal = [[NSMutableArray<CardView*> alloc] init];
+  }
+  return _cardViewsInternal;
+}
+
+
+#pragma mark - CardView management
+- (void) updateCardView:(CardView*)cardView chosen:(BOOL)chosen;
+{
+  //  NSLog(@"updateCardView");
+  [self.viewAnimationQueue transitionWithView:cardView
+                                     duration:self.cardChooseAnimationTime
+                                      options:self.cardChooseAnimation
+                          animationConditions:^BOOL{
+                            return chosen != cardView.chosen;
+                          }
+                                   animations:^{
+                                     cardView.chosen = !cardView.chosen;
+                                   }
+                                   completion:NULL];
+  
+}
+
+
 
 
 - (void) addCardView:(CardView*)cardView
@@ -120,24 +142,6 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 
-- (NSMutableArray<CardView*> *)cardViewsInternal
-{
-  if (!_cardViewsInternal) {
-    _cardViewsInternal = [[NSMutableArray<CardView*> alloc] init];
-  }
-  return _cardViewsInternal;
-}
-
-
-- (void)handleCardTap:(UITapGestureRecognizer *)sender
-{
-  if (sender.state == UIGestureRecognizerStateEnded)
-  {
-    self.cardTapEventHandler((CardView*)sender.view);
-  }
-}
-
-
 - (void) positionCardView:(CardView *)cardView atPosition:(NSUInteger)position
 {
   NSUInteger row = position / self.grid.columnCount;
@@ -153,6 +157,7 @@ NS_ASSUME_NONNULL_BEGIN
                                       [cardView setNeedsDisplay]; //Todo(gena) consider moving to animateWithDuration implementation
                                     }];
 }
+
 
 - (void) alignCardsToViewSize:(CGSize)newSize
 {
@@ -190,10 +195,41 @@ NS_ASSUME_NONNULL_BEGIN
 //                                      }
 
                                     }];
-
-  
 }
 
+
+#pragma mark - Gestures recognizer callbacks
+
+- (void) handlePinch:(UIPinchGestureRecognizer *)sender
+{
+  if (sender.state == UIGestureRecognizerStateEnded)
+  {
+    NSArray<CardView*> *cardViews = [self.cardViewsInternal copy];
+    [self.viewAnimationQueue animateWithDuration:0.6
+                                           delay:0.0
+                                         options:UIViewAnimationOptionCurveEaseIn
+                                      animations:^{
+                                        for (CardView *cardView in cardViews) {
+                                          cardView.frame = CGRectMake(10, 10, cardView.frame.size.height, cardView.frame.size.width);
+                                        }
+                                      }
+                                      completion:^(BOOL finished) {
+                                      }];
+  }
+}
+
+
+- (void)handleCardTap:(UITapGestureRecognizer *)sender
+{
+  if (sender.state == UIGestureRecognizerStateEnded)
+  {
+    self.cardTapEventHandler((CardView*)sender.view);
+  }
+}
+
+
+
+#pragma mark - View layout change callbacks
 -(void) viewDidLayoutSubviews
 {
   [super viewDidLayoutSubviews];
@@ -201,6 +237,7 @@ NS_ASSUME_NONNULL_BEGIN
   [self alignCardsToViewSize:self.view.bounds.size];
   
 }
+
 
 - (void)traitCollectionDidChange:(UITraitCollection * _Nullable)previousTraitCollection
 {

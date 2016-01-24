@@ -57,7 +57,7 @@
                                 <rect key="frame" x="10" y="490" width="91" height="48"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="91" id="TJP-3g-8bw"/>
+                                    <constraint firstAttribute="width" constant="91" id="okO-dv-Wxn"/>
                                 </constraints>
                                 <state key="normal" title="New game">
                                     <color key="titleShadowColor" red="0.058823529409999999" green="0.43137254899999999" blue="0.19215686269999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -69,8 +69,8 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2 card match mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gfm-0Z-yoE">
                                 <rect key="frame" x="469" y="481" width="121" height="21"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="121" id="6Wk-0g-0On"/>
-                                    <constraint firstAttribute="height" constant="21" id="Csi-tP-SqN"/>
+                                    <constraint firstAttribute="width" constant="121" id="Gzs-Go-8aG"/>
+                                    <constraint firstAttribute="height" constant="21" id="fu0-1g-rQm"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -79,8 +79,8 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uYH-vh-doL">
                                 <rect key="frame" x="109" y="503" width="192" height="16"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="192" id="Eos-gp-cDo"/>
-                                    <constraint firstAttribute="height" constant="16" id="qTi-oz-bdS"/>
+                                    <constraint firstAttribute="height" constant="16" id="gPP-Mu-hEd"/>
+                                    <constraint firstAttribute="width" constant="192" id="t2h-Y7-bvc"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -96,39 +96,29 @@
                                     <action selector="touchGameModeControl:" destination="BYZ-38-t0r" eventType="valueChanged" id="lAG-k0-229"/>
                                 </connections>
                             </segmentedControl>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="jVO-cB-haT">
-                                <rect key="frame" x="15" y="72" width="570" height="401"/>
-                                <subviews>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="sPK-4D-aRB">
-                                        <rect key="frame" x="0.0" y="0.0" width="570" height="401"/>
-                                        <subviews>
-                                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oiP-Po-tuH">
-                                                <rect key="frame" x="0.0" y="0.0" width="570" height="401"/>
-                                                <connections>
-                                                    <segue destination="89I-vc-lND" kind="embed" identifier="gameTable" id="f3T-x8-iD9"/>
-                                                </connections>
-                                            </containerView>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                            </stackView>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oiP-Po-tuH">
+                                <rect key="frame" x="15" y="81" width="570" height="401"/>
+                                <connections>
+                                    <segue destination="89I-vc-lND" kind="embed" identifier="gameTable" id="f3T-x8-iD9"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.49803921579999999" green="0.49803921579999999" blue="0.49803921579999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="uYH-vh-doL" firstAttribute="leading" secondItem="EvV-PG-wnL" secondAttribute="trailing" constant="8" symbolic="YES" id="16M-9k-y5r"/>
-                            <constraint firstItem="jVO-cB-haT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="9Mg-X8-boH"/>
-                            <constraint firstItem="EvV-PG-wnL" firstAttribute="top" secondItem="jVO-cB-haT" secondAttribute="bottom" constant="17" id="AhR-tQ-dxu"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="gfm-0Z-yoE" secondAttribute="trailing" constant="-10" id="EMe-aH-ydy"/>
-                            <constraint firstItem="gfm-0Z-yoE" firstAttribute="trailing" secondItem="aGY-ZV-CFg" secondAttribute="trailing" id="FCh-u6-Wlb"/>
-                            <constraint firstItem="jVO-cB-haT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-5" id="LrR-hH-4xo"/>
-                            <constraint firstItem="gfm-0Z-yoE" firstAttribute="top" secondItem="jVO-cB-haT" secondAttribute="bottom" constant="8" symbolic="YES" id="P5A-K9-7GX"/>
-                            <constraint firstItem="aGY-ZV-CFg" firstAttribute="top" secondItem="gfm-0Z-yoE" secondAttribute="bottom" constant="8" symbolic="YES" id="Qoi-vc-MKT"/>
-                            <constraint firstItem="jVO-cB-haT" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="8" symbolic="YES" id="gRp-Jt-YZ5"/>
-                            <constraint firstItem="EvV-PG-wnL" firstAttribute="bottom" secondItem="aGY-ZV-CFg" secondAttribute="bottom" id="jBO-UU-nhD"/>
-                            <constraint firstItem="gfm-0Z-yoE" firstAttribute="leading" secondItem="aGY-ZV-CFg" secondAttribute="leading" id="oQE-TE-Eom"/>
-                            <constraint firstItem="EvV-PG-wnL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-10" id="qa1-bc-mTj"/>
-                            <constraint firstItem="uYH-vh-doL" firstAttribute="top" secondItem="jVO-cB-haT" secondAttribute="bottom" constant="30" id="tj8-hP-CqQ"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="EvV-PG-wnL" secondAttribute="bottom" constant="13" id="vJc-Kz-PnR"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="EvV-PG-wnL" secondAttribute="bottom" constant="13" id="Ajb-I2-NB4"/>
+                            <constraint firstItem="EvV-PG-wnL" firstAttribute="top" secondItem="oiP-Po-tuH" secondAttribute="bottom" constant="8" symbolic="YES" id="As3-dM-TpO"/>
+                            <constraint firstItem="uYH-vh-doL" firstAttribute="leading" secondItem="EvV-PG-wnL" secondAttribute="trailing" constant="8" symbolic="YES" id="Crg-pW-87v"/>
+                            <constraint firstItem="aGY-ZV-CFg" firstAttribute="trailing" secondItem="gfm-0Z-yoE" secondAttribute="trailing" id="FTE-iv-XAW"/>
+                            <constraint firstItem="aGY-ZV-CFg" firstAttribute="bottom" secondItem="EvV-PG-wnL" secondAttribute="bottom" id="MSd-LU-4O7"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="uYH-vh-doL" secondAttribute="bottom" constant="32" id="S6S-EK-AmE"/>
+                            <constraint firstItem="oiP-Po-tuH" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="17" id="SeW-sw-hgn"/>
+                            <constraint firstItem="gfm-0Z-yoE" firstAttribute="leading" secondItem="aGY-ZV-CFg" secondAttribute="leading" id="ZlM-9N-zfo"/>
+                            <constraint firstItem="oiP-Po-tuH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-5" id="cfP-IB-48g"/>
+                            <constraint firstItem="oiP-Po-tuH" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="gSJ-Dv-lG1"/>
+                            <constraint firstItem="EvV-PG-wnL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-10" id="hnq-sb-UyJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gfm-0Z-yoE" secondAttribute="trailing" constant="-10" id="hqv-rA-H5F"/>
+                            <constraint firstItem="uYH-vh-doL" firstAttribute="top" secondItem="oiP-Po-tuH" secondAttribute="bottom" constant="21" id="u8A-ed-057"/>
+                            <constraint firstItem="aGY-ZV-CFg" firstAttribute="top" secondItem="gfm-0Z-yoE" secondAttribute="bottom" constant="8" symbolic="YES" id="xhB-C6-izP"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="KaK-xr-Ree">
@@ -182,12 +172,6 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="row-io-yBy">
-                                <rect key="frame" x="10" y="72" width="578" height="403"/>
-                                <connections>
-                                    <segue destination="89I-vc-lND" kind="embed" identifier="gameTable" id="nGN-nl-sGE"/>
-                                </connections>
-                            </containerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fKe-io-2Du">
                                 <rect key="frame" x="497" y="500" width="91" height="48"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.59999999999999998" colorSpace="calibratedRGB"/>
@@ -201,6 +185,12 @@
                                     <action selector="dealMoreCards:" destination="MCi-gb-eFH" eventType="touchUpInside" id="1Im-jO-1fo"/>
                                 </connections>
                             </button>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="row-io-yBy">
+                                <rect key="frame" x="10" y="72" width="578" height="403"/>
+                                <connections>
+                                    <segue destination="89I-vc-lND" kind="embed" identifier="gameTable" id="nGN-nl-sGE"/>
+                                </connections>
+                            </containerView>
                         </subviews>
                         <color key="backgroundColor" red="0.60000002379999995" green="0.60000002379999995" blue="0.60000002379999995" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
