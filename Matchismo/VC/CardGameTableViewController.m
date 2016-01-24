@@ -10,6 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Grid *grid;
 @property (strong, nonatomic) ViewAnimationQueue *viewAnimationQueue;
 @property (strong, nonatomic) UIDynamicAnimator* animator;
+@property (nonatomic) BOOL stacked;
 @end
 @implementation CardGameTableViewController
 
@@ -19,9 +20,11 @@ NS_ASSUME_NONNULL_BEGIN
 {
   if (!_animator) {
     _animator = [[UIDynamicAnimator alloc] initWithReferenceView:self.view];
+    
   }
   return _animator;
 }
+
 
 - (Grid*) grid
 {
@@ -167,7 +170,7 @@ NS_ASSUME_NONNULL_BEGIN
     return; //nothing to do
   }
   NSLog(@"CardGameTableViewController::alignCardsToViewSize realigning cards...");
-  
+  self.stacked = NO; //since reset layout, we exit out the "stacked" mode
 	 // self.grid = nil;
   self.grid.cellAspectRatio = 0.7;
   self.grid.minimumNumberOfCells = 30;
@@ -176,7 +179,7 @@ NS_ASSUME_NONNULL_BEGIN
   NSLog(@"grid: %@", [self.grid description]);
   
 
-  [self.viewAnimationQueue animateWithDuration:0.0f
+  [self.viewAnimationQueue animateWithDuration:0.6f
                                          delay:0.0
                                        options:UIViewAnimationOptionCurveEaseInOut
                                     animations:^{
@@ -204,17 +207,28 @@ NS_ASSUME_NONNULL_BEGIN
 {
   if (sender.state == UIGestureRecognizerStateEnded)
   {
-    NSArray<CardView*> *cardViews = [self.cardViewsInternal copy];
-    [self.viewAnimationQueue animateWithDuration:0.6
-                                           delay:0.0
-                                         options:UIViewAnimationOptionCurveEaseIn
-                                      animations:^{
-                                        for (CardView *cardView in cardViews) {
-                                          cardView.frame = CGRectMake(10, 10, cardView.frame.size.height, cardView.frame.size.width);
+    NSLog(@"pinch scale %f", sender.scale);
+    if (sender.scale > 1) {
+      self.grid = nil;
+      self.stacked = YES;
+      NSArray<CardView*> *cardViews = [self.cardViewsInternal copy];
+      [self.viewAnimationQueue animateWithDuration:0.6
+                                             delay:0.0
+                                           options:UIViewAnimationOptionCurveEaseIn
+                                        animations:^{
+
+                                          for (CardView *cardView in cardViews) {
+                                            CGFloat cx = self.view.bounds.size.width/2 - cardView.frame.size.width/2;
+                                            CGFloat cy = self.view.bounds.size.height/2 - cardView.frame.size.height/2;
+                                            cardView.frame = CGRectMake(cx, cy, cardView.frame.size.width, cardView.frame.size.height);
+                                          }
                                         }
-                                      }
-                                      completion:^(BOOL finished) {
-                                      }];
+                                        completion:^(BOOL finished) {
+                                        }];
+    } else {
+      [self alignCardsToViewSize:self.view.bounds.size];
+      self.stacked = NO;
+    }
   }
 }
 
@@ -223,7 +237,9 @@ NS_ASSUME_NONNULL_BEGIN
 {
   if (sender.state == UIGestureRecognizerStateEnded)
   {
-    self.cardTapEventHandler((CardView*)sender.view);
+    if (!self.stacked) {
+      self.cardTapEventHandler((CardView*)sender.view);
+    }
   }
 }
 
@@ -256,6 +272,9 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) viewDidLoad
 {
   [super viewDidLoad];
+  UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
+  [self.view addGestureRecognizer:pinchRecognizer];
+  
   //  self.view.clipsToBounds = NO;
   //  NSLog(@"CardGameTableViewController::viewDidLoad ");
   //  [self alignCardsToViewSize:self.view.bounds.size];
