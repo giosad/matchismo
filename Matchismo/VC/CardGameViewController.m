@@ -6,7 +6,7 @@
 //  Copyright © 2016 LightricksNoobsDepartment. All rights reserved.
 //
 
-#import "GameHistoryViewController.h"
+
 #import "CardMatchingGame.h"
 #import "CardView.h"
 #import "CardGameViewController.h"
@@ -114,15 +114,6 @@
   }
   
   self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", (int)self.game.score];
-  //todo fix
-//  self.gameEventInfoLabel.attributedText = [self textInfoFromGameEvent:self.game.lastEvent];
-//  
-//  if (self.game.lastEvent.score != 0) {
-//    [self.gameHistory appendAttributedString:self.gameEventInfoLabel.attributedText];
-//    [self.gameHistory appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
-//  }
-//  
-  
 }
 
 -(CardView*) newCardViewForCard:(Card*)card //abstract
@@ -169,12 +160,7 @@
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
-  if ([segue.identifier isEqualToString:@"history"]) {
-    if ([segue.destinationViewController isKindOfClass:[GameHistoryViewController class]]) {
-      GameHistoryViewController *ghCtrl = (GameHistoryViewController *)segue.destinationViewController;
-      ghCtrl.gameHistory = self.gameHistory;
-    }
-  } else if ([segue.identifier isEqualToString:@"gameTable"]) {
+  if ([segue.identifier isEqualToString:@"gameTable"]) {
     if ([segue.destinationViewController isKindOfClass:[CardGameTableViewController class]]) {
       self.gameTableController = (CardGameTableViewController *)segue.destinationViewController;
     }
@@ -183,41 +169,5 @@
   
 }
 
--(NSAttributedString *)textInfoFromGameEvent:(CardMatchingGameEvent *)event
-{
-  NSMutableAttributedString* result = [[NSMutableAttributedString alloc] init];
-  //todo(gena): fix or remove
-  //
-  //    NSMutableAttributedString* cardsStr = [[NSMutableAttributedString alloc] init];
-  //    for (Card *card in event.cardsParticipated) {
-  //        [cardsStr appendAttributedString:[self titleForCard:card]];
-  //        [cardsStr appendAttributedString: [[NSMutableAttributedString alloc] initWithString:@" "]];
-  //    }
-  //    if (event.score == 0) {
-  //        [result appendAttributedString:cardsStr];
-  //    } else if (event.score > 0) {
-  //
-  //        NSMutableAttributedString* part1 = [[NSMutableAttributedString alloc] initWithString:@"Matched "];
-  //        NSMutableAttributedString* part2 = [[NSMutableAttributedString alloc]
-  //                                            initWithString:[NSString stringWithFormat:@"for %d points.",
-  //                                                            (int)event.score]];
-  //
-  //        [result appendAttributedString:part1];
-  //        [result appendAttributedString:cardsStr];
-  //        [result appendAttributedString:part2];
-  //
-  //    } else { //if negative score
-  //        NSMutableAttributedString* part2 = [[NSMutableAttributedString alloc]
-  //                                            initWithString:[NSString stringWithFormat:@"don't match! %d point penalty.",(int)-event.score]];
-  //        [result appendAttributedString:cardsStr];
-  //        [result appendAttributedString:part2];
-  //
-  //    }
-  //
-  //    [result addAttribute:NSFontAttributeName
-  //                   value:[UIFont systemFontOfSize:13]
-  //                   range:NSMakeRange(0, [result length])];
-  return result;
-}
 @end
 

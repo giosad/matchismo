@@ -7,7 +7,7 @@
 //
 
 #import "CardMatchingGame.h"
-#import "CardMatchingGameEvent.h"
+
 
 NS_ASSUME_NONNULL_BEGIN
 @interface CardMatchingGame()
@@ -105,8 +105,7 @@ NS_ASSUME_NONNULL_BEGIN
   
   NSMutableArray<Card*> *cardsReported = [cardsChosen mutableCopy];
   [cardsReported addObject:card];
-  CardMatchingGameEvent* ev = [[CardMatchingGameEvent alloc] initWithScore:matchScore cardsToReport:cardsReported];
-  self.lastEvent = ev;
+
 }
 
 static const int COST_TO_CHOOSE = 1;

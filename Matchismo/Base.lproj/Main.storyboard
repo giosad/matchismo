@@ -8,39 +8,6 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Moves History-->
-        <scene sceneID="9Op-ov-T4F">
-            <objects>
-                <viewController title="Moves History" id="HDV-NE-hfW" customClass="GameHistoryViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="oKx-wp-lYO"/>
-                        <viewControllerLayoutGuide type="bottom" id="bo4-5e-jgw"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="wMF-h9-fde">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="T0o-WE-Ipg">
-                                <rect key="frame" x="20" y="81" width="301" height="461"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                <connections>
-                                    <outlet property="delegate" destination="wMF-h9-fde" id="VWS-EF-hDz"/>
-                                </connections>
-                            </textView>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <connections>
-                        <outlet property="historyTextView" destination="T0o-WE-Ipg" id="kQe-a1-6ic"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="grT-gN-G6F" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="2394" y="362"/>
-        </scene>
         <!--Match Card Game View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -121,13 +88,7 @@
                             <constraint firstItem="aGY-ZV-CFg" firstAttribute="top" secondItem="gfm-0Z-yoE" secondAttribute="bottom" constant="8" symbolic="YES" id="xhB-C6-izP"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="KaK-xr-Ree">
-                        <barButtonItem key="rightBarButtonItem" title="Moves History" id="cko-xy-sIh">
-                            <connections>
-                                <segue destination="HDV-NE-hfW" kind="show" identifier="history" id="h2X-gD-Jg4"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="KaK-xr-Ree"/>
                     <connections>
                         <outlet property="gameModeControl" destination="aGY-ZV-CFg" id="Sbc-Ax-7BA"/>
                         <outlet property="gameModeLabel" destination="gfm-0Z-yoE" id="W6N-34-c2O"/>
@@ -211,13 +172,7 @@
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="ph9-lj-yPU">
-                        <barButtonItem key="rightBarButtonItem" title="Moves History" id="2yF-E8-1Q5">
-                            <connections>
-                                <segue destination="HDV-NE-hfW" kind="show" identifier="history" id="AL1-yC-c7o"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="ph9-lj-yPU"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="scoreLabel" destination="iXj-QJ-SZd" id="gC8-o1-VSP"/>
@@ -308,6 +263,5 @@
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="f3T-x8-iD9"/>
-        <segue reference="h2X-gD-Jg4"/>
     </inferredMetricsTieBreakers>
 </document>

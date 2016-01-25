@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "Deck.h"
-#import "CardMatchingGameEvent.h"
 NS_ASSUME_NONNULL_BEGIN
 @interface CardMatchingGame : NSObject
 
@@ -19,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(Card*)cardWithId:(id)cardId;
 -(NSArray<Card*>*) dealCards:(NSUInteger)count;
 @property (nonatomic) NSUInteger matchNumRule;
-@property (strong, nonatomic) CardMatchingGameEvent* lastEvent;
+
 @property (nonatomic, readonly) NSInteger score;
 
 @end
