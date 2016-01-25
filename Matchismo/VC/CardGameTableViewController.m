@@ -57,6 +57,13 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 #pragma mark - CardView management
+
+
+- (NSUInteger)maxNumOfCardViews
+{
+  return 20;
+}
+
 - (void) updateCardView:(CardView*)cardView chosen:(BOOL)chosen;
 {
   //  NSLog(@"updateCardView");

@@ -124,11 +124,14 @@
 
 -(void) dealCards:(NSUInteger)cardsAmount
 {
-  NSArray<Card*> *cards = [self.game dealCards:cardsAmount];
-  for (Card* card in cards) {
-    CardView* cview = [self newCardViewForCard:card];
-    cview.cardId = card;
-    [self.gameTableController addCardView:cview];
+  if ([self.gameTableController.cardViews count] < [self.gameTableController maxNumOfCardViews])
+  {
+    NSArray<Card*> *cards = [self.game dealCards:cardsAmount];
+    for (Card* card in cards) {
+      CardView* cview = [self newCardViewForCard:card];
+      cview.cardId = card;
+      [self.gameTableController addCardView:cview];
+    }
   }
 }
 

@@ -25,6 +25,7 @@ typedef void (^CardTapEventHandlerType)(CardView*);
 - (void) removeAllCardViews;
 - (void) removeCardView:(CardView*)cardView;
 - (void) updateCardView:(CardView*)cardView chosen:(BOOL)ischosen;
+- (NSUInteger) maxNumOfCardViews;
 
 
 @end
