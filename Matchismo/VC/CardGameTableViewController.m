@@ -10,12 +10,15 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Grid *grid;
 @property (strong, nonatomic) ViewAnimationQueue *viewAnimationQueue;
 @property (strong, nonatomic) UIDynamicAnimator* animator;
+@property (nonatomic) CGPoint anchorPoint;
 @property (nonatomic) BOOL stacked;
 @end
 @implementation CardGameTableViewController
 
 
 #pragma mark - Lazy initializers
+
+
 -(UIDynamicAnimator *)animator
 {
   if (!_animator) {
@@ -123,6 +126,7 @@ NS_ASSUME_NONNULL_BEGIN
 {
   NSArray<CardView*> *cardViewsToRemove = [self.cardViewsInternal copy];
   [self.cardViewsInternal removeAllObjects];
+  self.stacked = NO;
   [self.viewAnimationQueue animateWithDuration:0.6
                                          delay:0.0
                                        options:UIViewAnimationOptionCurveEaseIn
@@ -208,10 +212,11 @@ NS_ASSUME_NONNULL_BEGIN
   if (sender.state == UIGestureRecognizerStateEnded)
   {
     NSLog(@"pinch scale %f", sender.scale);
-    if (sender.scale > 1) {
+    if (sender.scale < 1) {
 
       self.stacked = YES;
       NSArray<CardView*> *cardViews = [self.cardViewsInternal copy];
+      __weak CardGameTableViewController *weakSelf = self;
       [self.viewAnimationQueue animateWithDuration:0.6
                                              delay:0.0
                                            options:UIViewAnimationOptionCurveEaseIn
@@ -224,12 +229,63 @@ NS_ASSUME_NONNULL_BEGIN
                                           }
                                         }
                                         completion:^(BOOL finished) {
+                                          for (CardView *cardView in cardViews) {
+                                            UIAttachmentBehavior *ab = [[UIAttachmentBehavior alloc] initWithItem:cardView attachedToAnchor:cardView.center];
+                                           // ab.frequency =  0.1 + 0.1*(arc4random() % 10);
+                                            ab.frequency = 0;
+                                            ab.length = 0;
+                                            
+                                            [weakSelf.animator addBehavior:ab];
+                                            weakSelf.anchorPoint = cardView.center;
+                                          }
+                                          
                                         }];
     } else {
       [self alignCardsToViewSize:self.view.bounds.size forced:YES];
       self.stacked = NO;
+      [self.animator removeAllBehaviors];
     }
   }
+}
+
+
+- (void) handlePan:(UIPanGestureRecognizer *)sender
+{
+  if (!self.stacked) {
+    return;
+  }
+  
+  if (sender.state == UIGestureRecognizerStateChanged)
+  {
+    CGPoint p = [sender translationInView:self.view];
+    for (UIDynamicBehavior *beh in self.animator.behaviors) {
+      UIAttachmentBehavior *abeh = (UIAttachmentBehavior *)beh;
+      
+      CGPoint ap = self.anchorPoint;
+      ap.x += p.x;
+      ap.y += p.y;
+      abeh.anchorPoint = ap;
+      abeh.frequency = 0;
+    }
+    NSLog(@"pan pos x %f  y %f", p.x, p.y);
+  }
+  if (sender.state == UIGestureRecognizerStateEnded)
+  {
+    
+    for (UIDynamicBehavior *beh in self.animator.behaviors) {
+      UIAttachmentBehavior *abeh = (UIAttachmentBehavior *)beh;
+      abeh.frequency = 3;
+      abeh.damping = 0.5;
+
+    }
+    
+    CGPoint p = [sender translationInView:self.view];
+    CGPoint ap = self.anchorPoint;
+    ap.x += p.x;
+    ap.y += p.y;
+    self.anchorPoint = ap;
+  }
+
 }
 
 
@@ -274,7 +330,9 @@ NS_ASSUME_NONNULL_BEGIN
   [super viewDidLoad];
   UIPinchGestureRecognizer *pinchRecognizer = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
   [self.view addGestureRecognizer:pinchRecognizer];
-  
+  UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+  [self.view addGestureRecognizer:panRecognizer];
+
   //  self.view.clipsToBounds = NO;
   //  NSLog(@"CardGameTableViewController::viewDidLoad ");
   //  [self alignCardsToViewSize:self.view.bounds.size];
