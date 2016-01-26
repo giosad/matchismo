@@ -39,6 +39,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /// Game model getter to be used by child classes
 //protected//
-@property (strong, nonatomic, readonly) CardMatchingGame *game;
+@property (strong, nonatomic, readonly, nullable) CardMatchingGame *game;
 @end
 NS_ASSUME_NONNULL_END

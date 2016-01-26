@@ -14,7 +14,6 @@
 
 @interface CardGameViewController ()
 
-@property (strong, nonatomic) NSMutableAttributedString *gameHistory;
 
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
@@ -22,7 +21,8 @@
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeControl;
 
 @property (weak, nonatomic, readwrite) CardGameTableViewController *gameTableController;
-@property (strong, nonatomic, readwrite) CardMatchingGame *game;
+@property (strong, nonatomic, readwrite, nullable) CardMatchingGame *game;
+@property (nonatomic) BOOL viewAlreadyAppearedFirstTime;
 @end
 
 @implementation CardGameViewController
@@ -42,14 +42,6 @@
   return nil;
 }
 
-- (NSMutableAttributedString *)gameHistory //lazy init
-{
-  if (!_gameHistory) {
-    _gameHistory = [[NSMutableAttributedString alloc] init];
-  }
-  return _gameHistory;
-}
-
 - (IBAction)startNewGameButton:(UIButton *)sender {
   [self startNewGame];
 }
@@ -61,7 +53,6 @@
 -(void) startNewGame {
   
   self.game = nil;  //will reset the game state
-  self.gameHistory = nil; //will reset the history log
   
   [self.gameTableController removeAllCardViews];
   
@@ -126,7 +117,7 @@
 
 -(void) dealCards:(NSUInteger)cardsAmount
 {
-  if ([self.gameTableController.cardViews count] < [self.gameTableController maxNumOfCardViews])
+  if ([self.gameTableController.cardViews count] + cardsAmount <= [self.gameTableController maxNumOfCardViews])
   {
     NSArray<Card*> *cards = [self.game dealCards:cardsAmount];
     for (Card* card in cards) {
@@ -154,12 +145,15 @@
   [super viewWillAppear:animated];
   NSLog(@"CardGameViewController::viewWillAppear");
   [self setupGameTable];
-  
+
 }
 -(void) viewDidAppear:(BOOL)animated
 {
   [super viewDidAppear:animated];
-
+  if (!self.viewAlreadyAppearedFirstTime) {
+    self.viewAlreadyAppearedFirstTime = YES;
+    [self startNewGame];
+  };
   NSLog(@"CardGameViewController::viewDidAppear");
 }
 
