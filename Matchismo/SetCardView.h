@@ -25,6 +25,8 @@ typedef NS_ENUM(NSUInteger, SetCardColor) {
   SetCardColorCount
 };
 
+
+/// UIView for representing Set game card of a specific kind
 @interface SetCardView : CardView
 @property (nonatomic, readonly) SetCardShape shape;
 @property (nonatomic, readonly) SetCardShading shading;

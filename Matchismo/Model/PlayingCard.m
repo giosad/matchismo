@@ -10,7 +10,7 @@
 @interface PlayingCard()
 @property (strong, nonatomic, readwrite) NSString *suit;
 @property (nonatomic, readwrite) NSUInteger rank;
-- (int)matchOtherCard:(PlayingCard *) otherCard;
+- (int)scoreForMatchingWithCard:(PlayingCard *) otherCard;
 @end
 @implementation PlayingCard
 #pragma mark - Initializers
@@ -32,9 +32,9 @@
   return self;
 }
 
-#pragma mark -
+#pragma mark - 
 
-- (int)matchOtherCard:(PlayingCard *) otherCard
+- (int)scoreForMatchingWithCard:(PlayingCard *) otherCard
 {
   int score = 0;
   if (otherCard.rank == self.rank) {
@@ -58,7 +58,7 @@ const static int MISMATCH_PENALTY = -2;
   for (PlayingCard *c1 in allCards) {
     for (PlayingCard *c2 in allCards) {
       if (c1 != c2) {
-        totalScore += [c1 matchOtherCard:c2];
+        totalScore += [c1 scoreForMatchingWithCard:c2];
       }
     }
   }

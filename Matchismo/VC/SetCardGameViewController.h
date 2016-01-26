@@ -7,7 +7,7 @@
 //
 
 #import "CardGameViewController.h"
-
+/// Set game specific VC for Set game View
 @interface SetCardGameViewController : CardGameViewController
 
 @end

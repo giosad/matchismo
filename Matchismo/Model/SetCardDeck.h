@@ -8,6 +8,7 @@
 
 #import "Deck.h"
 
+/// Set game deck implementation
 @interface SetCardDeck : Deck
 
 @end

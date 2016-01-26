@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *gameModeLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *gameModeControl;
 
+@property (weak, nonatomic, readwrite) CardGameTableViewController *gameTableController;
+@property (strong, nonatomic, readwrite) CardMatchingGame *game;
 @end
 
 @implementation CardGameViewController
@@ -53,7 +55,7 @@
 }
 
 - (IBAction)dealMoreCards:(UIButton *)sender {
-    [self dealCards:3];
+  [self dealCards:3];
 }
 
 -(void) startNewGame {
@@ -151,7 +153,7 @@
 {
   [super viewWillAppear:animated];
   NSLog(@"CardGameViewController::viewWillAppear");
-    [self setupGameTable];
+  [self setupGameTable];
   
 }
 -(void) viewDidAppear:(BOOL)animated

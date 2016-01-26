@@ -67,7 +67,7 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 
--(NSArray<Card*>* )getCardsChosenAndNotMatched
+-(NSArray<Card*>* )cardsChosenAndNotMatched
 {
   NSMutableArray* chosenCards = [[NSMutableArray alloc] init];
   for (Card *card in self.cards) {
@@ -84,7 +84,7 @@ NS_ASSUME_NONNULL_BEGIN
   int cardsToCheckNum = (int)self.matchNumRule - 1; //minus the card we clicked on now
   NSInteger matchScore = 0;
   
-  NSArray<Card*> *cardsChosen = [self getCardsChosenAndNotMatched];
+  NSArray<Card*> *cardsChosen = [self cardsChosenAndNotMatched];
   
   
   //if didn't finish choosing cards up to the policy amount

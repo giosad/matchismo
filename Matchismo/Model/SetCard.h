@@ -15,11 +15,18 @@ extern const NSUInteger kSetCardShapeTypeCount;
 extern const NSUInteger kSetCardColorCount;
 extern const NSUInteger kSetCardShadingCount;
 
-
+/// Set game card with specific card properties
 @interface SetCard : Card
-@property (nonatomic) NSUInteger shape;
-@property (nonatomic) NSUInteger shading;
-@property (nonatomic) NSUInteger color;
-@property (nonatomic) NSUInteger count;
+
+- (instancetype) initWithShape:(NSUInteger) shape
+                       shading:(NSUInteger) shading
+                         color:(NSUInteger) color
+                         count:(NSUInteger) count;
+
+
+@property (nonatomic, readonly) NSUInteger shape;
+@property (nonatomic, readonly) NSUInteger shading;
+@property (nonatomic, readonly) NSUInteger color;
+@property (nonatomic, readonly) NSUInteger count;
 
 @end

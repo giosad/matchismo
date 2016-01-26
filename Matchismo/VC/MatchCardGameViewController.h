@@ -7,6 +7,6 @@
 //
 
 #import "CardGameViewController.h"
-
+/// Playing card game specific VC for Playing card game View
 @interface MatchCardGameViewController : CardGameViewController
 @end

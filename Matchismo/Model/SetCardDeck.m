@@ -16,11 +16,10 @@
       for (int color = 0; color < kSetCardColorCount; color++) {
         for (int shading = 0; shading < kSetCardShadingCount; shading++) {
           for (NSUInteger count = 1; count <= kSetCardShapeNumCount; count++) {
-            SetCard *card = [[SetCard alloc] init];
-            card.shape = shape;
-            card.color = color;
-            card.shading = shading;
-            card.count = count;
+            SetCard *card = [[SetCard alloc] initWithShape:shape
+                                                   shading:color
+                                                     color:shading
+                                                     count:count];
             
             [self addCard:card];
           }

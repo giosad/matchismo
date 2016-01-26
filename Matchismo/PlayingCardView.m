@@ -34,6 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
                                         attributes: @{NSForegroundColorAttributeName: suitColor}];
   return suitStr;
 }
+
 -(NSMutableAttributedString *)cornerText
 {
   NSMutableAttributedString *title = [[NSMutableAttributedString alloc] init];
@@ -194,6 +195,22 @@ NS_ASSUME_NONNULL_BEGIN
                             upsideDown:YES];
   }
 }
+
+#pragma mark - CGContext mgmt
+
+- (void)pushContextAndRotateUpsideDown
+{
+  CGContextRef context = UIGraphicsGetCurrentContext();
+  CGContextSaveGState(context);
+  CGContextTranslateCTM(context, self.bounds.size.width, self.bounds.size.height);
+  CGContextRotateCTM(context, M_PI);
+}
+
+- (void)popContext
+{
+  CGContextRestoreGState(UIGraphicsGetCurrentContext());
+}
+
 
 @end
 

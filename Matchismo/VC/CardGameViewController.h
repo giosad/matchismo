@@ -13,23 +13,32 @@
 #import "CardMatchingGame.h"
 
 NS_ASSUME_NONNULL_BEGIN
+
+/// The abstract card game controller
 @interface CardGameViewController : UIViewController
 
-//abstract, should return a deck of card that follow a certain match rule
+/// Return a new deck of cards that follow a certain match rule
+//protected abstract//
 - (Deck *)createDeck;
 
--(CardView*) newCardViewForCard:(Card*)card; //abstract
+/// Given the \card returns a view that can represent the card markings
+//protected abstract//
+-(CardView*) newCardViewForCard:(Card*)card;
 
--(void) setupGameTable; //protected//, may be extended
-
-
+/// Do initial game setup - configure game table etc. called once.
 //protected//
--(void)startNewGame;
+-(void) setupGameTable;
 
+/// Start new game, remove all cards present, reset score, match rule, redeal initial amount of cards
+//protected//
+-(void) startNewGame;
 
+/// Game table controller getter to be used by child classes
 //protected//
-@property (weak, nonatomic) CardGameTableViewController *gameTableController;
+@property (weak, nonatomic, readonly) CardGameTableViewController *gameTableController;
+
+/// Game model getter to be used by child classes
 //protected//
-@property (strong, nonatomic) CardMatchingGame *game;
+@property (strong, nonatomic, readonly) CardMatchingGame *game;
 @end
 NS_ASSUME_NONNULL_END

@@ -10,7 +10,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) Grid *grid;
 @property (strong, nonatomic) ViewAnimationQueue *viewAnimationQueue;
 @property (strong, nonatomic) UIDynamicAnimator* animator;
-@property (nonatomic) CGPoint anchorPoint;
+@property (nonatomic) CGPoint snapPoint;
 @property (nonatomic) BOOL stacked;
 @end
 @implementation CardGameTableViewController
@@ -66,7 +66,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) updateCardView:(CardView*)cardView chosen:(BOOL)chosen;
 {
-  //  NSLog(@"updateCardView");
   [self.viewAnimationQueue transitionWithView:cardView
                                      duration:self.cardChooseAnimationTime
                                       options:self.cardChooseAnimation
@@ -203,10 +202,10 @@ NS_ASSUME_NONNULL_BEGIN
                                       }
                                     }
                                     completion:^(BOOL finished) {
-//                                      for (CardView *cardView in self.cardViewsInternal) {
-//                                        //redraw card, since its image may be garbled due to card size changes
-//                                          [cardView setNeedsDisplay];
-//                                      }
+                                      for (CardView *cardView in self.cardViewsInternal) {
+                                        //redraw card, since its image may be garbled due to card size changes
+                                          [cardView setNeedsDisplay];
+                                      }
 
                                     }];
 }
@@ -236,14 +235,12 @@ NS_ASSUME_NONNULL_BEGIN
                                           }
                                         }
                                         completion:^(BOOL finished) {
+                                          int i = 0;
                                           for (CardView *cardView in cardViews) {
-                                            UIAttachmentBehavior *ab = [[UIAttachmentBehavior alloc] initWithItem:cardView attachedToAnchor:cardView.center];
-                                           // ab.frequency =  0.1 + 0.1*(arc4random() % 10);
-                                            ab.frequency = 0;
-                                            ab.length = 0;
-                                            
+                                            UISnapBehavior *ab = [[UISnapBehavior alloc] initWithItem:cardView snapToPoint:cardView.center];
+                                            ab.damping = 0.5 - 0.02*(++i);
                                             [weakSelf.animator addBehavior:ab];
-                                            weakSelf.anchorPoint = cardView.center;
+                                            weakSelf.snapPoint = cardView.center;
                                           }
                                           
                                         }];
@@ -266,31 +263,22 @@ NS_ASSUME_NONNULL_BEGIN
   {
     CGPoint p = [sender translationInView:self.view];
     for (UIDynamicBehavior *beh in self.animator.behaviors) {
-      UIAttachmentBehavior *abeh = (UIAttachmentBehavior *)beh;
-      
-      CGPoint ap = self.anchorPoint;
-      ap.x += p.x;
-      ap.y += p.y;
-      abeh.anchorPoint = ap;
-      abeh.frequency = 0;
+      UISnapBehavior *sbeh = (UISnapBehavior *)beh;
+      //update behavior snapPoint
+      CGPoint sp = self.snapPoint;
+      sp.x += p.x;
+      sp.y += p.y;
+      sbeh.snapPoint = sp;
     }
-    NSLog(@"pan pos x %f  y %f", p.x, p.y);
   }
-  if (sender.state == UIGestureRecognizerStateEnded)
-  {
-    
-    for (UIDynamicBehavior *beh in self.animator.behaviors) {
-      UIAttachmentBehavior *abeh = (UIAttachmentBehavior *)beh;
-      abeh.frequency = 3;
-      abeh.damping = 0.5;
-
-    }
-    
+  
+  if (sender.state == UIGestureRecognizerStateEnded) {
     CGPoint p = [sender translationInView:self.view];
-    CGPoint ap = self.anchorPoint;
-    ap.x += p.x;
-    ap.y += p.y;
-    self.anchorPoint = ap;
+    //update self.snapPoint
+    CGPoint sp = self.snapPoint;
+    sp.x += p.x;
+    sp.y += p.y;
+    self.snapPoint = sp;
   }
 
 }

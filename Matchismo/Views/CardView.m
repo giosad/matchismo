@@ -60,18 +60,6 @@ NS_ASSUME_NONNULL_BEGIN
   [self setNeedsDisplay];
 }
 
-- (void)pushContextAndRotateUpsideDown
-{
-  CGContextRef context = UIGraphicsGetCurrentContext();
-  CGContextSaveGState(context);
-  CGContextTranslateCTM(context, self.bounds.size.width, self.bounds.size.height);
-  CGContextRotateCTM(context, M_PI);
-}
-
-- (void)popContext
-{
-  CGContextRestoreGState(UIGraphicsGetCurrentContext());
-}
 
 #pragma mark - Gesture Handlers
 

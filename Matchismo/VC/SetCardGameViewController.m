@@ -34,7 +34,7 @@
 //  [super viewDidLoad];
 //  [self startNewGame];
 //}
-- (void)setupGameTable
+- (void)setupGameTable //override
 {
   [super setupGameTable];
   self.gameTableController.closeGapsWhenCardsRemoved = YES;
@@ -43,7 +43,7 @@
 }
 
 
--(void)startNewGame
+-(void)startNewGame //override
 {
   [super startNewGame];
   
