@@ -183,31 +183,30 @@ NS_ASSUME_NONNULL_BEGIN
   self.stacked = NO; //since reset layout, we exit out the "stacked" mode
 	 // self.grid = nil;
   self.grid.cellAspectRatio = 0.7;
-  self.grid.minimumNumberOfCells = 30;
+  self.grid.minimumNumberOfCells = 20;
   self.grid.size = newSize;
   NSLog(@"grid.resolved %d", self.grid.inputsAreValid);
   NSLog(@"grid: %@", [self.grid description]);
   
-
-  [self.viewAnimationQueue animateWithDuration:0.6f
-                                         delay:0.0
-                                       options:UIViewAnimationOptionCurveEaseInOut
-                                    animations:^{
-                                      int position = 0;
-                                      for (CardView *cardView in self.cardViewsInternal) {
-                                        NSUInteger row = position / self.grid.columnCount;
-                                        NSUInteger col = position % self.grid.columnCount;
-                                        cardView.frame = [self.grid frameOfCellAtRow:row inColumn:col];
-                                        position++;
-                                      }
-                                    }
-                                    completion:^(BOOL finished) {
-                                      for (CardView *cardView in self.cardViewsInternal) {
-                                        //redraw card, since its image may be garbled due to card size changes
-                                          [cardView setNeedsDisplay];
-                                      }
-
-                                    }];
+  [UIView animateWithDuration:0.6f
+                        delay:0.0
+                      options:UIViewAnimationOptionCurveEaseInOut
+                   animations:^{
+                     int position = 0;
+                     for (CardView *cardView in self.cardViewsInternal) {
+                       NSUInteger row = position / self.grid.columnCount;
+                       NSUInteger col = position % self.grid.columnCount;
+                       cardView.frame = [self.grid frameOfCellAtRow:row inColumn:col];
+                       position++;
+                     }
+                   }
+                   completion:^(BOOL finished) {
+                     for (CardView *cardView in self.cardViewsInternal) {
+                       //redraw card, since its image may be garbled due to card size changes
+                       [cardView setNeedsDisplay];
+                     }
+                     
+                   }];
 }
 
 
@@ -300,7 +299,8 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) viewDidLayoutSubviews
 {
   [super viewDidLayoutSubviews];
-  NSLog(@"CardGameTableViewController::viewDidLayoutSubviews %p", self);
+  //NSLog(@"CardGameTableViewController::viewDidLayoutSubviews %p", self);
+  NSLog(@"size %@", NSStringFromCGSize(self.view.bounds.size));
   [self alignCardsToViewSize:self.view.bounds.size forced:NO];
   
 }
@@ -316,7 +316,7 @@ NS_ASSUME_NONNULL_BEGIN
 -(void) viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-  //  NSLog(@"CardGameTableViewController::viewWillTransitionToSize size.w %0.1f size.h %0.1f", size.width, size.height);
+  NSLog(@"CardGameTableViewController::viewWillTransitionToSize size.w %0.1f size.h %0.1f", size.width, size.height);
   //  [self alignCardsToViewSize:size];
 }
 
