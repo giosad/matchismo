@@ -85,7 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) addCardView:(CardView*)cardView
 {
   [self.cardViewsInternal addObject:cardView];
-  CGRect fr = CGRectMake(-300, -300, self.grid.cellSize.width*2, self.grid.cellSize.height*2);
+  CGRect fr = CGRectMake(-300, -300, self.grid.cellSize.width, self.grid.cellSize.height);
   cardView.frame = fr;
   
   [self.view addSubview:cardView];
