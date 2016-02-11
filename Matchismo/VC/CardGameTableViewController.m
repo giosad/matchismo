@@ -157,12 +157,14 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) positionCardView:(CardView *)cardView atPosition:(NSUInteger)position
 {
-  NSUInteger row = position / self.grid.columnCount;
-  NSUInteger col = position % self.grid.columnCount;
+
   [self.viewAnimationQueue animateWithDuration:0.2f
                                          delay:0.0
                                        options:UIViewAnimationOptionCurveEaseInOut
                                     animations:^{
+                                      [self updateGridSizeIfNeeded];
+                                      NSUInteger row = position / self.grid.columnCount;
+                                      NSUInteger col = position % self.grid.columnCount;
                                       cardView.frame = [self.grid frameOfCellAtRow:row inColumn:col];
                                     }
                                     completion:^(BOOL finished) {
@@ -172,21 +174,26 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 
-- (void) alignCardsToViewSize:(CGSize)newSize forced:(BOOL)forced
+- (void) updateGridSizeIfNeeded
 {
-  NSLog(@"CardGameTableViewController::alignCardsToViewSize newSize %.1fx%.1f ", newSize.height, newSize.width);
-  if (CGSizeEqualToSize(self.grid.size, newSize) && !forced) {
-    NSLog(@"CardGameTableViewController::alignCardsToViewSize - same size, nothing to do");
-    return; //nothing to do
+  CGSize newSize = CGRectStandardize(self.view.bounds).size;
+  if (CGSizeEqualToSize(self.grid.size, newSize)) {
+    return;
   }
-  NSLog(@"CardGameTableViewController::alignCardsToViewSize realigning cards...");
-  self.stacked = NO; //since reset layout, we exit out the "stacked" mode
-	 // self.grid = nil;
+
   self.grid.cellAspectRatio = 0.7;
   self.grid.minimumNumberOfCells = 20;
   self.grid.size = newSize;
   NSLog(@"grid.resolved %d", self.grid.inputsAreValid);
   NSLog(@"grid: %@", [self.grid description]);
+}
+
+
+- (void) alignCardsToViewSize
+{
+  NSLog(@"CardGameTableViewController::alignCardsToViewSize realigning cards...");
+  self.stacked = NO; //since reset layout, we exit out the "stacked" mode
+  [self updateGridSizeIfNeeded];
   
   [UIView animateWithDuration:0.6f
                         delay:0.0
@@ -244,7 +251,7 @@ NS_ASSUME_NONNULL_BEGIN
                                           
                                         }];
     } else {
-      [self alignCardsToViewSize:self.view.bounds.size forced:YES];
+      [self alignCardsToViewSize];
       self.stacked = NO;
       [self.animator removeAllBehaviors];
     }
@@ -294,30 +301,16 @@ NS_ASSUME_NONNULL_BEGIN
 }
 
 
-
 #pragma mark - View layout change callbacks
--(void) viewDidLayoutSubviews
-{
-  [super viewDidLayoutSubviews];
-  //NSLog(@"CardGameTableViewController::viewDidLayoutSubviews %p", self);
-  NSLog(@"size %@", NSStringFromCGSize(self.view.bounds.size));
-  [self alignCardsToViewSize:self.view.bounds.size forced:NO];
-  
-}
 
-
-- (void)traitCollectionDidChange:(UITraitCollection * _Nullable)previousTraitCollection
-{
-  [super traitCollectionDidChange: previousTraitCollection];
-  //  NSLog(@"CardGameTableViewController::traitCollectionDidChange");
-  //  [self alignCardsToViewSize:self.view.bounds.size];
-}
 
 -(void) viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator
 {
   [super viewWillTransitionToSize:size withTransitionCoordinator:coordinator];
-  NSLog(@"CardGameTableViewController::viewWillTransitionToSize size.w %0.1f size.h %0.1f", size.width, size.height);
-  //  [self alignCardsToViewSize:size];
+  [coordinator animateAlongsideTransition:^(id<UIViewControllerTransitionCoordinatorContext>  _Nonnull context) {
+    NSLog(@"CardGameTableViewController::viewWillTransitionToSize self.bounds.size.w %0.1f size.h %0.1f", self.view.bounds.size.width, self.view.bounds.size.height);
+    [self alignCardsToViewSize];
+  } completion:nil];
 }
 
 -(void) viewDidLoad
@@ -327,26 +320,8 @@ NS_ASSUME_NONNULL_BEGIN
   [self.view addGestureRecognizer:pinchRecognizer];
   UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
   [self.view addGestureRecognizer:panRecognizer];
-
-  //  self.view.clipsToBounds = NO;
-  //  NSLog(@"CardGameTableViewController::viewDidLoad ");
-  //  [self alignCardsToViewSize:self.view.bounds.size];
-  
-}
--(void) viewDidAppear:(BOOL)animated
-{
-  [super viewDidAppear:animated];
-  //  NSLog(@"CardGameTableViewController::viewDidAppear animated=%d", animated);
-  //  [self alignCardsToViewSize:self.view.bounds.size];
-  
 }
 
--(void) viewWillAppear:(BOOL)animated
-{
-  [super viewWillAppear:animated];
-  
-  //  NSLog(@"CardGameTableViewController::viewWillAppear");
-}
 @end
 
 NS_ASSUME_NONNULL_END
