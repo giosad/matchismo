@@ -85,6 +85,8 @@ NS_ASSUME_NONNULL_BEGIN
 - (void) addCardView:(CardView*)cardView
 {
   [self.cardViewsInternal addObject:cardView];
+  [self updateGridSizeIfNeeded];
+
   CGRect fr = CGRectMake(-300, -300, self.grid.cellSize.width, self.grid.cellSize.height);
   cardView.frame = fr;
   
@@ -157,7 +159,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void) positionCardView:(CardView *)cardView atPosition:(NSUInteger)position
 {
-
   [self.viewAnimationQueue animateWithDuration:0.2f
                                          delay:0.0
                                        options:UIViewAnimationOptionCurveEaseInOut
